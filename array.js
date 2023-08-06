@@ -367,9 +367,9 @@ has the largest sum and returns its sum and prints the subarray.
 */
 
 function maxSubArrSum(arr) {
-    let max = Number.MIN_SAFE_INTEGER,sum =0;
+    let max = Number.MIN_SAFE_INTEGER, sum = 0;
     // for (let i = 0; i < arr.length; i++) {
-     //   let sum = 0;
+    //   let sum = 0;
     //     for (let j = i; j < arr.length; j++) {
     //        
     //        
@@ -380,24 +380,24 @@ function maxSubArrSum(arr) {
     // }
     // return max;
 
-// -------------------------------------------------------------
+    // -------------------------------------------------------------
 
-for(let i=0;i<arr.length;i++){
-    sum +=arr[i];
-    if(sum > max){
-        max = sum
+    for (let i = 0; i < arr.length; i++) {
+        sum += arr[i];
+        if (sum > max) {
+            max = sum
+        }
+        if (sum < 0) {
+            sum = 0;
+        }
     }
-    if(sum < 0){
-        sum = 0;
-    }
+
+    return max;
+
+
 }
 
-return max;
-
-   
-}
-
-console.log(maxSubArrSum([ -2, 1, -3, 4, -1, 2, 1, -5, 4]))
+console.log(maxSubArrSum([-2, 1, -3, 4, -1, 2, 1, -5, 4]))
 
 
 
@@ -405,44 +405,288 @@ console.log(maxSubArrSum([ -2, 1, -3, 4, -1, 2, 1, -5, 4]))
 Problem Statement: Given an array consisting of only 0s, 1s, and 2s. Write a program to in-place sort the array without using inbuilt sort functions. ( Expected: Single pass-O(N) and constant space)
 */
 
-function sort(arr){
-//     let zero = 0,one =0,two=0;
-//          for(let j=0;j<arr.length;j++){
-//              if(arr[j] == 0) zero++
-//              else if(arr[j] == 1) one++
-//              else two++
-//      }
-//  for(let i=0;i<zero;i++){
-//      arr[i] = 0
-//  }
-//  for(let i=zero;i<zero+one;i++){
-//      arr[i] = 1
-//  }
-//  for(let i=zero+one;i<arr.length;i++){
-//      arr[i] = 2
-//  }
-//      return arr
+function sort(arr) {
+    //     let zero = 0,one =0,two=0;
+    //          for(let j=0;j<arr.length;j++){
+    //              if(arr[j] == 0) zero++
+    //              else if(arr[j] == 1) one++
+    //              else two++
+    //      }
+    //  for(let i=0;i<zero;i++){
+    //      arr[i] = 0
+    //  }
+    //  for(let i=zero;i<zero+one;i++){
+    //      arr[i] = 1
+    //  }
+    //  for(let i=zero+one;i<arr.length;i++){
+    //      arr[i] = 2
+    //  }
+    //      return arr
 
-//Optimal --dutch flag algorithm  //take 2 forward explanation
+    //Optimal --dutch flag algorithm  //take 2 forward explanation
 
-let low=0,mid=0,high=arr.length -1;
+    let low = 0, mid = 0, high = arr.length - 1;
 
-while(mid <= high){
+    while (mid <= high) {
 
-    if(arr[mid] == 0){
-        [arr[low],arr[mid]] = [arr[mid],arr[low]]
-        low++;
-        mid++;
-    }else if(arr[mid] == 1){
-        mid++;
+        if (arr[mid] == 0) {
+            [arr[low], arr[mid]] = [arr[mid], arr[low]]
+            low++;
+            mid++;
+        } else if (arr[mid] == 1) {
+            mid++;
+        } else {
+            [arr[high], arr[mid]] = [arr[mid], arr[high]]
+            high--;
+        }
+    }
+
+    return arr;
+}
+
+console.log(sort([2, 0, 2, 0, 1, 1, 0]))
+console.log(sort([2, 0, 1]))
+
+
+
+//Pascal Traingle
+
+//Variation 1: Given row number r and column number c. Print the element at position (r, c) in Pascal’s triangle.
+
+function nCr(n, r) {
+    let ans = 1;
+    for (let i = 0; i < r; i++) {
+        ans = ans * (n - i);
+        ans = ans / (i + 1);
+    }
+    return ans;
+}
+
+function pascalTriangle(r, c) {
+    const result = nCr(r - 1, c - 1);
+    console.log(result)
+}
+
+pascalTriangle(5, 3)
+
+//Variation 2: Given the row number n. Print the n-th row of Pascal’s triangle.
+
+function pascalTriangle1(n) {
+    let previous = 1;
+    console.log(previous)
+    for (let i = 1; i < n; i++) {
+        previous = previous * (n - i);
+        previous = previous / (i);
+        console.log(previous)
+    }
+}
+pascalTriangle1(5)
+
+//Variation 3: Given the number of rows n. Print the first n rows of Pascal’s triangle.
+
+function pascalTriangle2(n) {
+    let res = [1], previous = 1;
+    for (let i = 1; i < n; i++) {
+        previous = previous * (n - i);
+        previous = previous / (i);
+        res.push(previous)
+    }
+    return res
+}
+
+function generatePascalTriangle(n) {
+    let result = [];
+    for (let i = 1; i <= n; i++) {
+        result.push(pascalTriangle2(i))
+    }
+    return result
+}
+const ans = generatePascalTriangle(5)
+for (let i = 0; i < ans.length; i++) {
+    console.log(ans[i].join(''))
+}
+
+
+
+/*
+Problem Statement: Given an array, print all the elements which are leaders. A Leader is an element that is greater than all of the elements on its right side in the array.
+*/
+function leaderEle(arr) {
+
+    //brute force
+    let res = [], max = arr[arr.length - 1];
+    // for (let i = 0; i < arr.length ; i++) {
+    //     let  leader = true;
+    //     for (let j = i + 1; j < arr.length; j++) {
+    //         if (arr[i] < arr[j]) {
+    //             leader = false
+    //             break;
+    //         }
+
+    //     }
+    //     if (leader) {
+    //         res.push(arr[i])
+    //     } 
+    // }
+
+    //OPtimal
+    res.push(arr[arr.length - 1]);
+    for (let i = arr.length - 2; i >= 0; i--) {
+        if (arr[i] > max) {
+            res.push(arr[i]);
+            max = arr[i]
+        }
+    }
+    return res;
+}
+
+console.log(leaderEle([10, 22, 12, 3, 0, 6, 7, 40, 24, 20]))
+console.log(leaderEle([10, 22, 12, 3, 0, 6]))
+
+
+
+function spiralMat(arr) {
+    let top = 0, bottom = arr.length - 1, left = 0, right = arr[0].length - 1, res = [];
+
+    while (top <= bottom && left <= right) {
+        for (let i = left; i <= right; i++) {
+            res.push(arr[top][i])
+        }
+        top++;
+        for (let i = top; i <= bottom; i++) {
+            res.push(arr[i][right])
+        }
+        right--;
+
+        for (let i = right; i >= left; i--) {
+            res.push(arr[bottom][i])
+        }
+        bottom--;
+        for (let i = bottom; i >= top; i--) {
+            res.push(arr[i][left])
+        }
+        left++;
+
+
+    }
+    return res
+
+}
+
+console.log(spiralMat([[1, 2, 3, 4, 5], [16, 17, 18, 19, 6], [15, 24, 25, 20, 7], [14, 23, 22, 21, 8], [13, 12, 11, 10, 9]]))
+
+
+
+function rotate90Deg(arr) {
+    //brute force
+    // let rotateArr = new Array(3).fill(0).map(()=> new Array(3).fill(0));
+    // let n = arr.length
+
+    // for(let i=0;i<arr.length;i++){
+    //     for(let j=0;j<arr.length;j++){
+    //       rotateArr[j][n-i-1] = arr[i][j]
+    // }
+
+    // }
+    // return rotateArr
+
+    //Optimal
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = i; j < arr.length; j++) {
+            let temp = 0;
+            temp = arr[i][j];
+            arr[i][j] = arr[j][i];
+            arr[j][i] = temp;
+        }
+    }
+    console.log(arr)
+    for (let i = 0; i < arr.length; i++) {
+        for (j = 0; j < Math.floor(arr[0].length / 2); j++) {
+            let temp = 0;
+            temp = arr[i][j]
+            arr[i][j] = arr[i][arr.length - 1 - j];
+            arr[i][arr.length - 1 - j] = temp;
+
+        }
+    }
+    return arr
+}
+
+console.log(rotate90Deg([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
+
+
+
+//Hard
+
+/*
+Problem Statement: Given an array of N integers, write a program to return an element that occurs more than N/2 times in the given array. You may consider that such an element always exists in the array.
+Example 1:
+Input Format: N = 3, nums[] = {3,2,3}
+Result: 3
+Explanation: When we just count the occurrences of each number and compare with half of the size of the array, you will get 3 for the above solution. 
+
+Example 2:
+Input Format:  N = 7, nums[] = {2,2,1,1,1,2,2}
+
+Result: 2
+
+Explanation: After counting the number of times each element appears and comparing it with half of array size, we get 2 as result.
+
+Example 3:
+Input Format:  N = 10, nums[] = {4,4,2,4,3,4,4,3,2,4}
+
+Result: 4
+*/
+function majorityEle(arr) {
+    // const obj = {}; const n = Math.floor(arr.length / 2);
+    // for (let key of arr) {
+    //     if (obj[key]) {
+    //         obj[key] += 1
+    //     } else {
+    //         obj[key] = 1
+    //     }
+    // }
+    // console.log(obj)
+    // for (let key in obj) {
+    //     if(obj[key] > n){
+    //         return key
+    //     }
+
+    // }
+
+
+//Optimal Approach: Moore’s Voting Algorithm:
+
+let count=0,ele;
+const n = Math.floor(arr.length / 2);
+for(let i=0;i<n;i++){
+    if(count==0){
+        count++;
+        ele=arr[i]
+    }else if(arr[i] == ele){
+        count++;
     }else{
-        [arr[high],arr[mid]] = [arr[mid],arr[high]]
-        high--;
+        count--;
     }
 }
 
-return arr;
- }
- 
- console.log(sort([2,0,2,0,1,1,0]))
- console.log(sort([2,0,1]))
+
+ // Checking if the stored element is the majority element
+for(leti=0;i<n;i++){
+    if(arr[i]==ele){
+        count++;
+    }
+}
+
+if(ele > n ){
+    return ele
+}
+
+return -1
+}
+
+
+
+
+
+console.log(majorityEle([2, 2, 1, 1, 1, 2, 2]))
