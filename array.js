@@ -142,15 +142,12 @@ function moveZeros(arr) {
 
 console.log(moveZeros([1, 0, 2, 3, 0, 4, 0, 1]))
 
-
-
-
 //Given an array of N integers and an integer D, left rotate the array by D place.
 
 const leftRotateArray = (arr, d) => {
     //First reverse the sub array 
 
-    if (arr.length % 2 == 0) return arr
+    if (d % 2 == 0) return arr
 
     for (let i = 0; i < Math.floor(d / 2); i++) {
         temp = arr[i];
@@ -210,7 +207,7 @@ const removeDuplicates = (arr) => {
 
 }
 
-// console.log(removeDuplicates([1,3,6,5,4,3,4,2]))
+console.log(removeDuplicates([1,3,6,5,4,3,4,2]))
 
 
 
@@ -672,7 +669,7 @@ for(let i=0;i<n;i++){
 
 
  // Checking if the stored element is the majority element
-for(leti=0;i<n;i++){
+for(let i=0;i<n;i++){
     if(arr[i]==ele){
         count++;
     }
@@ -690,3 +687,190 @@ return -1
 
 
 console.log(majorityEle([2, 2, 1, 1, 1, 2, 2]))
+
+
+
+/*
+Given an array arr of distinct elements of size N, the task is to rearrange the elements of the array in a zig-zag fashion so that the converted array should be in the below form: 
+
+arr[0] < arr[1]  > arr[2] < arr[3] > arr[4] < . . . . arr[n-2] < arr[n-1] > arr[n]. 
+
+
+Input:
+N = 7
+Arr[] = {4, 3, 7, 8, 6, 2, 1}
+Output: 3 7 4 8 2 6 1
+Explanation: 3 < 7 > 4 < 8 > 2 < 6 > 1
+*/
+
+function zigzag(arr){
+    let  temp;
+    for(let i=0;i<arr.length -1;i++){
+        if(i%2==0 && arr[i]>arr[i+1]){
+            temp = arr[i];
+            arr[i] = arr[i+1];
+            arr[i+1] = temp;
+        }else if(i%2==1 && arr[i]<arr[i+1]){
+            temp = arr[i];
+            arr[i] = arr[i+1];
+            arr[i+1] = temp;
+        }
+    }
+    
+    return arr
+}
+
+console.log(zigzag([4, 3, 7, 8, 6, 2, 1]))
+
+
+function subArraySum(arr,sum){
+    let currSum =arr[0],begin=0;
+    for(let i=1;i<arr.length;i++){
+        while(currSum > sum && begin < i - 1){
+            currSum -= arr[begin];
+            begin++;
+        }
+        if(currSum == sum){
+            return {l:begin,r:i-1}
+        }
+
+        if(i<arr.length){
+            currSum+=arr[i]
+        }
+    }
+
+  
+}
+
+console.log(subArraySum([1,2,3,4,5,6,7,8],12))
+console.log(subArraySum([1,2,3,7,5],12))
+
+
+
+
+
+
+// JavaScript program to find next smallest
+// palindrome
+
+
+// Returns next palindrome of a given
+// number num. This function is for
+// input type 2 and 3
+function generateNextPalindromeUtil(num , n)
+{
+	var mid = parseInt(n / 2);
+
+	// end of left side is always 'mid -1'
+	var i = mid - 1;
+	
+	// Beginning of right side depends
+	// if n is odd or even
+	var j = (n % 2 == 0) ? mid : mid + 1;
+	
+	// A bool variable to check if copy of left
+	// side to right
+	// is sufficient or not
+	leftsmaller = false;
+
+	// Initially, ignore the middle same digits
+	while (i >= 0 && num[i] == num[j])
+	{
+		i--;
+		j++;
+	}
+	
+	// Find if the middle digit(s) need to
+	// be incremented or not (or copying left
+	// side is not sufficient)
+	if (i < 0 || num[i] < num[j])
+	{
+		leftsmaller = true;
+	}
+	
+	// Copy the mirror of left to tight
+	while (i >= 0)
+	{
+		num[j++] = num[i--];
+	}
+	
+	// Handle the case where middle digit(s)
+	// must be incremented. This part of code
+	// is for CASE 1 and CASE 2.2
+	if (leftsmaller)
+	{
+		var carry = 1;
+	
+		// If there are odd digits, then increment
+		// the middle digit and store the carry
+		if (n % 2 == 1) {
+			num[mid] += 1;
+			carry = parseInt(num[mid] / 10);
+			num[mid] %= 10;
+		}
+		i = mid - 1;
+		j = (n % 2 == 0 ? mid : mid + 1);
+		
+		// Add 1 to the rightmost digit of the left
+		// side, propagate the carry towards MSB digit
+		// and simultaneously copying mirror of the
+		// left side to the right side.
+		//when carry is zero no need to loop through till i>=0
+		while (i >= 0 && carry>0)
+		{
+			num[i] = num[i] + carry;
+			carry = parseInt(num[i] / 10);
+			num[i] %= 10;
+			num[j] = num[i];// copy mirror to right
+			i--;
+			j++;
+		}
+
+	}
+}
+
+// The function that prints next palindrome
+// of a given number num with n digits.
+function generateNextPalindrome(num , n)
+{
+	
+	
+	// Input type 1: All the digits are 9,
+	// simply o/p 1 followed by n-1 0's
+	// followed by 1.
+	if (isAll9(num, n)) {
+		console.log("1");
+		for (i = 0; i < n - 1; i++)
+        console.log("0");
+		console.log("1");
+
+	}
+
+	// Input type 2 and 3
+	else {
+		generateNextPalindromeUtil(num, n);
+		printarray(num);
+	}
+}
+
+// A utility function to check if num has all 9s
+function isAll9(num , n) {
+	for (i = 0; i < n; i++)
+		if (num[i] != 9)
+			return false;
+	return true;
+}
+
+/* Utility that prints out an array on a line */
+function printarray(num) {
+	for (i = 0; i < num.length; i++)
+    console.log(num[i]+"\n");
+}
+
+
+var num = [ 9, 4, 1, 8, 7, 9, 7, 8, 3, 2, 2 ];
+generateNextPalindrome(num, num.length);
+
+// This code is contributed by 29AjayKumar
+
+

@@ -105,13 +105,13 @@ function reverseStr(str){
 
 console.log(reverseStr('geeks'))
 
-function palindrome(str){
+function palindrome(str,indx){
   if(str.length <= 1){
     return true
-  }else if(str[0]  !== str[str.length - 1]){
+  }else if(str[0]  !== str[str.length -1]){
     return false
   }else{
-    return palindrome(str.slice(1,str.length - 1))
+    return palindrome(str.slice(1,-1))
   }
 }
 
@@ -332,3 +332,86 @@ function subsetSum(arr,indx,n,res,currSum){
 }
 
 console.log(subsetSum([2,3,1],0,3,new Array,0))
+
+
+
+//solve sudoko
+
+const isSafe = (board,row,col,num)=>{
+    for(let i=0;i<board.length;i++){
+      if(  board[i][col] == num){
+        return false;
+      }
+    }
+    for(let i=0;i<board.length;i++){
+        if(  board[row][i] == num){
+            return false;
+          }
+    }
+
+    //grid
+    let sr = (Math.floor(row/3))*3; 
+    let sc = (Math.floor(col/3))*3; 
+
+    for(let i=sr;i<sr+3;i++){
+        for(let j = sc;j<sc+3;j++){
+            if(board[i][j] == num){
+                return false
+            }
+        }
+    }
+return true;
+}
+ 
+const helper = (board,row,col)=>{
+    if(row === board.length){
+        return true
+    }
+
+    let nrow = 0;
+    let ncol = 0;
+
+    if(col == board.length){
+        nrow=row + 1;
+        ncol =0;
+    }else{
+        nrow = row;
+        ncol = col + 1;
+    }
+
+    if(board[row][col] !== 0){
+        if(helper(board,nrow,ncol)){
+            return true;
+        }
+    }else{
+        for(let i=1;i<=9;i++){
+           if( isSafe(board,row,col,i)){
+                board[row][col] = i
+               if( helper(board,nrow,ncol)){
+                 return true;
+               }else{
+                board[row][col] = 0;
+               }
+           }
+        }
+    }
+    return false;
+}
+
+const solveSudoko = (board)=>{
+  const res =  helper(board,0,0);
+  console.log(board)
+}
+const sudokoArr = [[3, 0 ,6, 5, 0, 8, 4, 0, 0],
+[5, 2, 0, 0, 0, 0, 0, 0, 0],
+[0 ,8 ,7 ,0 ,0 ,0 ,0 ,3 ,1 ],
+[0 ,0, 3, 0, 1, 0, 0, 8, 0],
+[9, 0, 0, 8, 6, 3, 0, 0, 5],
+[0 ,5 ,0 ,0 ,9 ,0 ,6, 0, 0],
+[1 ,3, 0, 0, 0, 0, 2, 5, 0],
+[0, 0, 0, 0, 0, 0, 0, 7, 4],
+[0 ,0, 5, 2, 0, 6, 3, 0, 0]]
+console.log(solveSudoko(sudokoArr))
+
+
+

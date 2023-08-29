@@ -6,22 +6,22 @@
 //       if(a[i] === b[j]){
 //         str+=b[j]
 //       }
-      
+
 //     }
-    
+
 //   }
 //   console.log(str);
 //   return a === str
 // }
 
-const checkAnagram = (x,y)=>{
+const checkAnagram = (x, y) => {
   let a = x.split('')
   let b = y.split('')
-  if(a.length !== b.length) false
-  
-  const res1 = a.sort((a,b)=> a>b?1:-1)
-  const res2 = b.sort((a,b)=>a>b?1:-1)
-  console.log(res1,res2);
+  if (a.length !== b.length) false
+
+  const res1 = a.sort((a, b) => a > b ? 1 : -1)
+  const res2 = b.sort((a, b) => a > b ? 1 : -1)
+  console.log(res1, res2);
   return res1.join('') === res2.join('')
 }
 
@@ -32,16 +32,16 @@ const checkAnagram = (x,y)=>{
 // console.log(result);
 
 // Find the reverse of the string
-const reverseStr = (str)=>{
+const reverseStr = (str) => {
   let result = ''
-    for(let i=str.length-1;i>=0;i--){
-      result+= str[i]
-    }
-  return result
-  
+  for (let i = str.length - 1; i >= 0; i--) {
+    result += str[i]
   }
-  
-  console.log(reverseStr('shivani'))
+  return result
+
+}
+
+console.log(reverseStr('shivani'))
 
 // const res = reverseNumb(10);
 // console.log(res);
@@ -58,55 +58,55 @@ const reverseStr = (str)=>{
 
 //WAP to find the second largest number in an array without sorting
 
-const secondLargest = (...rest)=>{
-  let first = -1 ,second = -1
-  for(let val of rest){
-    if(val > first){
-      second = first 
-      first = val 
-    }else if (val > second && val != first){
+const secondLargest = (...rest) => {
+  let first = -1, second = -1
+  for (let val of rest) {
+    if (val > first) {
+      second = first
+      first = val
+    } else if (val > second && val != first) {
       second = val
     }
   }
   console.log(second);
-  }
+}
 
 // secondLargest(1,3,2,4,5,19,23,18)
 
 //  WAP to print Fibonacci series with recursion
 
-const fibonacci = (n)=>{
-// let a = 0,b=1,sum;
-//let arr = [a,b]
-// for(let i=2;i<n;i++){
-//  sum = a+b; 
-//  a =b
-//  b = sum;
-// }
+const fibonacci = (n) => {
+  // let a = 0,b=1,sum;
+  //let arr = [a,b]
+  // for(let i=2;i<n;i++){
+  //  sum = a+b; 
+  //  a =b
+  //  b = sum;
+  // }
 
-if(n <= 1){
-return n
-}else{
-  return fibonacci(n-2) + fibonacci(n -1)
-}
+  if (n <= 1) {
+    return n
+  } else {
+    return fibonacci(n - 2) + fibonacci(n - 1)
+  }
 
 }
 
 // console.log(resu);
 
-const prime = (n)=>{
-  for(let i=2;i<n;i++){
-    if(n%i ==0){
+const prime = (n) => {
+  for (let i = 2; i < n; i++) {
+    if (n % i == 0) {
       return false
     }
   }
   return true
 }
 
-function range(n){
-  for(let i=1;i<n;i++){
-    if(prime(i)){
-      console.log('Prime',i)
+function range(n) {
+  for (let i = 1; i < n; i++) {
+    if (prime(i)) {
+      console.log('Prime', i)
     }
   }
 }
@@ -121,28 +121,28 @@ function availableMoves(pos) {
   const number = Number(pos.split('')[1]);
   let possibleMoves = [];
   for (let i = 1; i <= 8; i++) {
-    if(i == number){
+    if (i == number) {
       continue;
     }
     leftDiagonal = i + (letter - number);
 
-    if(65<=leftDiagonal && leftDiagonal<=72){
-      possibleMoves.push(`${String.fromCharCode(leftDiagonal)}${i}` )
+    if (65 <= leftDiagonal && leftDiagonal <= 72) {
+      possibleMoves.push(`${String.fromCharCode(leftDiagonal)}${i}`)
     }
-    possibleMoves.push(`${String.fromCharCode(letter)}${i}` )
+    possibleMoves.push(`${String.fromCharCode(letter)}${i}`)
   }
 
-  for(let j=72;j>=65;j--){
-    if(j == letter){
+  for (let j = 72; j >= 65; j--) {
+    if (j == letter) {
       continue;
     }
     rightDiagonal = number + (letter - j);
-    if(1<=rightDiagonal && rightDiagonal<=8){
+    if (1 <= rightDiagonal && rightDiagonal <= 8) {
       possibleMoves.push(`${String.fromCharCode(j)}${rightDiagonal}`)
     }
     possibleMoves.push(`${String.fromCharCode(j)}${number}`)
   }
-return possibleMoves.sort()
+  return possibleMoves.sort()
 
 }
 
@@ -154,69 +154,34 @@ return possibleMoves.sort()
 
 
 
-function reverse(str){
+function reverse(str) {
   let result = ''
-  for (let i=str.length-1;i>=0;i--){
+  for (let i = str.length - 1; i >= 0; i--) {
     console.log(str[i])
-    result+= str[i]
+    result += str[i]
   }
   return result
 }
 
-function selectionSort(arr){
-  for(let i=0;i<arr.length-1;i++){
-    for(let j=i+1;j<arr.length;j++){
-      if(arr[i] > arr[j]){
-         temp = arr[i]
-         arr[i] = arr[j]
-         arr[j] = temp
-      }
-    }
-  }
-  return arr
-}
-
-console.log(selectionSort([64, 25, 12, 22, 11]))
-
-function bubbleSort(arr){
-  for(let i=0;i<arr.length-1;i++){
-    for(let j=0;j<arr.length - i -1 ;j++){
-      if(arr[j] > arr[j+1]){
-        temp = arr[j];
-        arr[j] = arr[j+1]
-        arr[j+1] = temp
-      }
-    }
-  }
-  return arr
-}
-
-console.log(bubbleSort([6, 3, 0, 5]))
-
-
-function insertionSort(arr){
-  
-}
-
-function power(x,n){
+function power(x, n) {
   sum = 1;
-  for(let i=1;i<=n;i++){
-    sum*=x
+  for (let i = 1; i <= n; i++) {
+    sum *= x
   }
   return sum
 }
-console.log(power(3,3))
+console.log(power(3, 3))
 
 
 //Code to find even numbers in a list
-const even = (arr)=>{
-for(let i=0;i<arr.length;i++){
-  if(arr[i]%2 == 0){
-    console.log(arr[i])
+const even = (arr) => {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] % 2 == 0) {
+      console.log(arr[i])
+    }
   }
 }
-}
-even([1,3,2,4,5,67,,89,0,10])
+even([1, 3, 2, 4, 5, 67, , 89, 0, 10])
 
 
 
@@ -228,18 +193,18 @@ let anagramsGroup = (words) => {
   let anagrams = {}
   let anagramsArr = []
   //For of loop for array
-  for (let word of words){
-      let letters = word.split('').sort().join('')
-      anagrams[letters] = anagrams[letters] ||  []
-      anagrams[letters].push(word)  
-      }
-  for (let key in anagrams){
-      anagramsArr.push(anagrams[key])
+  for (let word of words) {
+    let letters = word.split('').sort().join('')
+    anagrams[letters] = anagrams[letters] || []
+    anagrams[letters].push(word)
+  }
+  for (let key in anagrams) {
+    anagramsArr.push(anagrams[key])
   }
   return anagramsArr
 }
 
-let words =  ["eat","tea","tan","ate","nat","bat"]
+let words = ["eat", "tea", "tan", "ate", "nat", "bat"]
 
 const res = anagramsGroup(words)
 console.log(res)
