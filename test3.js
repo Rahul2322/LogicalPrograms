@@ -208,3 +208,156 @@ console.log(star8(5))
 
 
 
+var a = 20;
+var b = 20;
+const c = 30;
+
+const obj = {
+    a : 10,
+    arrow:()=>{
+        console.log(this.a,this.b,this.c)
+    },
+
+    regular: function(){
+        console.log(this.a,this.b,this.c)
+    }
+
+
+}
+console.log(obj.regular())
+console.log(obj.arrow())
+
+//arr=[2,3,1,1,4]
+function minJumps(arr){
+    let jump =0;
+    let pos = 0;
+    let des = 0;
+
+    for(let i=0;i<arr.length - 1;i++){
+        des = Math.max(des,arr[i]+i);
+
+        if(pos == i){
+         pos = des;
+         jump++;
+        }
+    }
+
+    return jump;
+}
+
+console.log(minJumps([1, 3, 6, 3, 2, 3, 6, 8, 9, 5]))
+
+let obj1 = {
+   name:'john',
+   age:30,
+   address:{
+     street:'121322',
+     city:"skjdhs",
+     state:'e'
+   }
+ }
+function deepCopy(obj) {
+   if (obj === null || typeof obj !== 'object') {
+       return obj;
+   }
+ 
+   const copyObj = {};
+   for (let key in obj) {
+       if (obj.hasOwnProperty(key)) {
+           copyObj[key] = deepCopy(obj[key]);
+       }
+   }
+   return copyObj;
+ }
+ 
+ const obj2 = deepCopy(obj1);
+ obj2.address.city = 'LosAnege'
+ console.log(obj2.address.city)
+
+ function count(){
+   let count =0;
+   function inner(){
+      
+     count++;
+     console.log(count)
+   }
+   return inner
+ }
+ 
+ const counter = count();
+ console.log(counter());
+ console.log(counter());
+ console.log(counter());
+
+
+ for (let index = 0; index < '12'.length; index+=2) {
+  console.log(index)
+   
+ }
+
+
+ function generateParenthesis(n){
+     let res = [];  
+     let curr = '';
+     function parenthesis(n,curr,o,c){
+      if( o == n && c == n){
+         res.push(curr);
+         return;
+        }
+
+        if(o<n){
+         parenthesis(n,curr+'(',o+1,c)
+        }
+
+        if(o>c){
+         parenthesis(n,curr+')',o,c+1)
+        }
+     }
+     parenthesis(n,curr,0,0)
+
+     return res;
+ }
+
+ console.log(generateParenthesis(2))
+
+
+ function subsequences(n, str,curr,indx,res){
+   if(indx == n){
+      res.push(curr);
+      return;
+   }
+
+   //Include
+      subsequences(n,str,curr+str[indx],indx+1,res)
+   //Exclude
+      subsequences(n,str,curr,indx+1,res)
+ }
+
+ function main(n,str){
+   let curr ='',res=[];
+   subsequences(n,str,curr,0,res);
+   return res.sort();
+ }
+ console.log(main(3,'abc'));
+ console.log(main(2,'aa'));
+
+
+
+
+
+ function secMin(arr){
+   let min1 = Number.MAX_SAFE_INTEGER
+   let min2 = Number.MAX_SAFE_INTEGER;
+   for(let i=0;i<arr.length;i++){
+      if(arr[i] < min1){
+         min2 = min1
+         min1 = arr[i];
+      }else if(arr[i] < min2 && arr[i] > min1 ){
+         min2 = arr[i]
+      }
+   }
+
+   return min2;
+ }
+
+ console.log(secMin([3, 5, 8, 4, 2, 10, 9]))

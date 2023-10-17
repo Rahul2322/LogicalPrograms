@@ -127,16 +127,6 @@ const missing_numbers = (arr)=>{
 console.log(missing_numbers([-3,-2,1,5]))
 
 
-
-
-
-
-
-
-
-
-
-
 const factorial=(x)=>{
   if (x == 0) {
       return 1;
@@ -220,10 +210,6 @@ function palindrome(str){
 }
 
 console.log(palindrome('mom'))
-
-
-
-
 
 
 function frequenctOfCharacter(str){
@@ -391,3 +377,88 @@ return count == 2 ? true :false
 
 
 console.log(isPrime(5))
+
+function sample(arr){
+  for(let i=0;i<arr.length;i++){
+    setTimeout(function(){
+      console.log(arr[i])
+    },i*1000)
+  }
+}
+
+
+
+
+function count(){
+  let count =0;
+  function inner(){
+    count++;
+    console.log('first')
+  }
+  return inner
+}
+
+const counter = count();
+console.log(counter());
+console.log(counter());
+console.log(counter());
+
+
+
+let obj1 = {
+  name:'john',
+  age:30,
+  address:{
+    street:'121322',
+    city:"skjdhs",
+    state:'e'
+  }
+}
+function deepCopy(obj) {
+  if (obj === null || typeof obj !== 'object') {
+      return obj;
+  }
+
+  if (Array.isArray(obj)) {
+      const copyArr = [];
+      for (let i = 0; i < obj.length; i++) {
+          copyArr[i] = deepCopy(obj[i]);
+      }
+      return copyArr;
+  }
+
+  const copyObj = {};
+  for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+          copyObj[key] = deepCopy(obj[key]);
+      }
+  }
+  return copyObj;
+}
+
+const obj2 = deepCopy(obj1);
+obj2.address.city = 'LosAnege'
+
+function sumOfIndexes(arr, endIndex) {
+  let sum = 0;
+  for (let i = 0; i <= endIndex; i++) {
+      sum += i;
+  }
+  return sum;
+}
+
+console.log(sumOfIndexes([1,2,3],2))
+
+let x = {
+  a:1,
+  toString:function(){
+    return this.a++;
+  }
+}
+console.log(x,'x',x == 1,x==2,x.toString())
+if(x == 1){
+  console.log('helo')
+}
+
+
+

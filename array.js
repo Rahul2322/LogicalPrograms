@@ -22,6 +22,15 @@ function sortedArray(arr) {
     }
     return true
 }
+function sort(arr){
+    for(let i=0;i<arr.length;i++){
+      if(arr[i] !== i+1) return false
+    }
+ return true
+  }
+ 
+  console.log(sort([1,2,6,4,5]))
+  console.log(sort([1,2,3,4,5]))
 // Time Complexity: O(N)
 //Space Complexity: O(1)
 const res = sortedArray([1, 2, 3, 4, 5])
@@ -874,3 +883,236 @@ generateNextPalindrome(num, num.length);
 // This code is contributed by 29AjayKumar
 
 
+const secondLargest = (arr)=>{
+    let first = -1 ,second = -1
+    for(let i=0;i<arr.length;i++){
+      if(arr[i] > first){
+        second = first 
+        first = arr[i] 
+      }else if (arr[i] > second && arr[i] != first){
+        second = arr[i]
+      }
+    }
+    console.log(second);
+    }
+  
+  secondLargest([1,3,2,4,5,19,23,18])
+
+
+function checkSubstring(string,substring){
+return string.toLowerCase().includes(substring.toLowerCase())
+}
+
+const string = "foo";
+const substring = "oo";
+
+console.log(checkSubstring(string,substring))
+
+
+var a = 10;
+let  b = 20;
+const c = 30;
+
+const obj1 = {
+    a : 10,
+    arrow:()=>{
+        console.log(this.a,this.b,this.c)
+    },
+
+    regular: function(){
+        console.log(this.a,this.b,this.c)
+    }
+
+
+}
+
+// function closure (){
+//     let arr = []
+//     for(let i=0;i<10000;i++){
+//         arr[i] = i*i
+//     }
+
+//     return function(index){
+//         console.log(arr[index])
+//     }
+// }
+// const res = closure();
+// res("6")
+// console.time('6')
+// console.log(first)
+// console.time('6')
+
+
+var obj  = {
+    a:{
+        b:{
+            c:12
+        }
+    },
+   findPath: function(path) {
+        const keys = path.split('.');
+        let current = this;
+      
+        for (let key of keys) {
+          if (current[key] === undefined) {
+            return undefined;
+          }
+          current = current[key];
+        }
+      
+        return current;
+      }
+      
+}
+
+console.log(obj.findPath('a.b.c'))
+
+
+//1.Syntax
+function square(num){
+    return num*num
+}
+
+const squareArr = (num)=>{
+    return num*num
+}
+
+//2.Implicit "return" keyword
+const squareArrow = (num)=> num*num
+
+//3.arguments
+
+function sum(){
+    console.log(arguments) // will gives the all arg spass
+    //   '0': 1,
+//   '1': 2,
+//   '2': 3
+// }
+
+}
+sum(1,2,3)
+
+const sumArr = ()=>console.log(arguments)  //arguments is not defined
+sumArr(1,2,3)
+
+//4.- "this" keyword
+let user = {
+    username:"rahul",
+    arr:()=>{
+        console.log("Subscribe to"+this.username )
+    },
+    regular:function(){
+        console.log("Subscribe to"+this.username )
+    }
+}
+
+class Animal {
+    constructor = (name, numOfLegs) => {
+      this.name = name
+      this.numOfLegs = numOfLegs
+    }
+    
+    sayName = () => {
+    console.log(`My name is ${this.name}`)
+  }
+  }
+  
+  // Uncaught SyntaxError: Classes may not have a field named 'constructor'
+
+//   Because arrow functions involve expressions that are assigned variables, JavaScript now sees constructor as a field. And in classes, you cannot have a field named constructor as that is a reserved name.
+
+// But, we can use arrow functions for the methods in the class without getting errors. For example:
+
+//6.5 Arrow functions cannot be accessed before initialization
+//Hoisting is a concept where a variable or function is lifted to the top of its global or local scope before the whole code is executed. This makes it possible for such a variable/function to be accessed before initialization. Here's a function example:
+
+printName()
+
+console.log("hello")
+
+function printName() {
+  console.log("i am dillion")
+}
+
+// i am dillion
+// hello
+
+
+// As you can see here, we called printName before it was actually declared in the code. But we don't get any errors. printName() is executed (logging "i am dillion" to the console) before console.log("hello").
+
+// What happens here is hoisting.
+
+// The printName function is raised to the top of the global scope (the scope it is declared in) before the whole code is executed, thereby making it possible to execute the function earlier.
+
+// But not all kinds of functions can be accessed before initialization. All functions and variables in JavaScript are hoisted, but only declared functions can be accessed before initialization.
+
+// Here's an example with an arrow function:
+
+printName()
+
+console.log("hello")
+
+const printName = () => {
+  console.log("i am dillion")
+}
+
+// ReferenceError: Cannot access 'printName' before initialization
+// Running this code, you get an error: ReferenceError: Cannot access 'printName' before initialization.
+
+// As we saw in point 4, printName is not a declared function. It is a variable, declared with const which is assigned a function expression. Variables declared with let and const are hoisted, but they cannot be accessed before the line they are initialized.
+
+// Let's say we use var for our arrow function:
+
+printName()
+
+console.log("hello")
+
+var printName = () => {
+  console.log("i am dillion")
+}
+
+// TypeError: printName is not a function
+//Here, we have declared the printName variable with var. The error we get now is TypeError: printName is not a function. The reason for this is that variables declared with var are hoisted and accessible, but they have a default value of undefined. So attempting to access printName before the line it was initialized with the function expression is interpreted as undefined(), and as you know, "undefined is not a function".
+
+
+//What will be logged to console?
+
+let count = 0;
+(function(){
+    if(count == 0){
+        let count = 1;
+        console.log(count)
+    }
+    console.log(count)
+})()
+
+
+//write a function that allow you to do this
+
+var addSix = createBase(6);
+
+addSix(5);
+addSix(6);
+
+function createBase(x){
+    return function(y){
+        return x+y
+    }
+}
+
+//Time optimization
+
+function find(indx){
+    let arr = [];
+    for(let i=0;i<1000000;i++){
+        arr[i] = i*i
+    }
+    console.log(arr[indx])
+}
+
+console.time("6");
+find(6);
+console.timeEnd("6") //81.74 ms
+console.time("12")
+find(12);
+console.timeEnd("12") //76.98 ms

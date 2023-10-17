@@ -79,6 +79,7 @@ function partition(arr,n,k){
 
   return best;
 }
+
 const array1 = [ 10, 20, 60, 50, 30, 40 ];
 const n = array1.length
 console.log('min of max',partition(array1,n,3))

@@ -208,3 +208,484 @@ let words = ["eat", "tea", "tan", "ate", "nat", "bat"]
 
 const res = anagramsGroup(words)
 console.log(res)
+
+
+
+function string(str){
+  let resStr = ''
+  const isUpperCase = char=> char.charCodeAt()>=65 && char.charCodeAt()<=90
+  
+  const isLowerCase = char=> char.charCodeAt()>=97 && char.charCodeAt()<=122
+
+  
+for(let i=0;i<str.length;i++){
+  if(isLowerCase(str[i])){
+    console.log('isLowerCase(str[i])',isLowerCase(str[i]))
+      resStr+=String.fromCharCode(str[i].charCodeAt(0) - 32)
+  }
+  else if(isUpperCase(str[i])){
+    console.log('isUpperCase(str[i])',isUpperCase(str[i]))
+      resStr+=String.fromCharCode(str[i].charCodeAt(0) + 32)
+  }else{
+    console.log('jsndjs')
+      resStr+=str[i]
+  }
+}
+return resStr
+}
+
+console.log(string('HITESH RAMDIN'))
+
+
+function find(){
+  let arr = [];
+  for(let i=0;i<1000000;i++){
+      arr[i] = i*i
+  }
+  return function (indx){
+    console.log(arr[indx])
+  }
+}
+const closure = find();
+console.time("6");
+closure(6);
+console.timeEnd("6") //1.1ms
+console.time("12")
+closure(12);
+console.timeEnd("12") //0.5ms
+
+
+//block scope and settimeout
+
+// for(var i=0;i<3;i++){
+//   setTimeout((i) => {
+//     console.log(i)
+//   }, i*1000,i);
+// }
+
+
+// for(var i=0;i<3;i++){
+//  function inner(i){
+//   setTimeout(() => {
+//     console.log(i)
+//   }, i*1000);
+//  }
+//  inner(i)
+// }
+
+//How would you use a closure to create a private counter
+
+function counter (){
+  var _counter = 0;
+
+  function add(increment){
+    _counter += increment         
+  }
+
+  function retrive(){
+    return 'Counter=' + _counter
+  }
+  return {
+    add,
+    retrive
+    
+  }
+}
+
+const c = counter();
+c.add(5);
+c.add(15);
+console.log(c.retrive())
+
+//make this run only once
+let view;
+function like(){
+  let counter = 0;
+  view = "rahul";
+  return function(){
+    if(counter ==  0){
+      console.log(view);
+      counter++;
+    }
+    console.log('already ran')
+  }
+  
+}
+
+const called = like();
+called();
+called();
+called();
+called();
+
+//or polyfill
+
+function once(func,context){
+  let ran;
+  return function(){
+    if(func){
+      ran = func.apply(context || this,arguments);
+      func = null
+    }
+    return ran;
+  }
+}
+
+const hello = once(()=>console.log("hello"));
+hello();
+hello();
+hello();
+
+// Caching/Memoize function
+
+function memoize(fn){
+  let res = {};
+  return function (...args){
+    let argsCache = JSON.stringify(args);
+    console.log(argsCache)
+    if(!res[argsCache]){
+      // res[argsCache] = fn(...args)
+      res[argsCache] = fn.call( this,...args)
+    }
+    return res[argsCache]
+  }
+}
+
+function clumsySquare (num1,num2){
+
+  for(let i=0;i<100000000;i++){}
+    return num1*num2
+   
+}
+
+const result = memoize(clumsySquare);
+console.log(result(33,33))
+
+//Currying is a process in which a function takes one argument at a time and retuns another function expecting a argument and so on 
+
+function f(a){
+  return function(b){
+    return a+b;
+  }
+}
+console.log(f(5)(6))
+
+//evaluate("sum")(4)(2) => 6
+//evaluate("subtract")(4)(2) => 2
+//evaluate("multiply")(4)(2) => 8
+//evaluate("divide")(4)(2) => 2
+
+
+function evaluate(operator){
+  return function (a){
+      return function (b){
+        if(operator === 'sum') return a+b;
+        else if(operator === 'subtract') return a-b;
+        else if(operator === 'multiply') return a*b;
+        else if(operator === 'divide') return a/b;
+        else return 'Invalid Operator'
+      }
+  }
+}
+
+const mul = evaluate("multiply");
+console.log(mul(2)(3))
+
+
+
+//Infinite currying ---> sum(1)(2)(3).....(n)
+
+function add(a){
+  return function (b){
+    if(b) return add(a+b);
+    return a;
+  }
+}
+
+const resp = add(5)(6)(7)(8)();
+console.log(resp)
+
+
+//curry implementation convert f(a,b,c,d) into f(a)(b)(c)(d)
+function curry(fn){
+  return function curriedFunc(...args){
+    console.log(args.length)
+      if(args.length >= fn.length){
+        return fn(...args)
+      }else{
+        return function(...next){
+          return curriedFunc(...args,...next)
+        }
+      }
+  }
+}
+
+const sums = (a,b,c,d)=>a+b+c+d;
+const totalSum = curry(sums);
+console.log(totalSum(1)(2)(3)(4));
+
+
+
+//what will be the output
+
+const func = (function(a){
+  delete a;            //delete is only  used to delete property from object and not a local variable
+  return a;
+
+})(5)
+console.log(func) //5
+
+//How to add dynamic property and value in obj
+
+const property = 'firstName';
+const name = "Rahul";
+
+const user={
+  // property : name;// --->wrong property : Rahul
+  [property] : name //---> firstName:Rahul
+}
+
+const a = {};
+const b = {key :"b"};
+const d = {key :"d"};
+
+a[b]=123;
+a[c]=456;
+console.log(a)
+console.log(a[b])
+
+//what be the output
+console.log([..."rahul"])
+
+//what be the output
+const settins = {
+  username:"rahul",
+  level:20,
+  health:20
+}
+const data = JSON.stringify(settins,["level","health"]);
+console.log(data)  //{"level":20,"health":20}  ---> only the provided value in array is stringified
+
+//What be the output
+const  shape = {
+  radius:10,
+  diameter: function(){
+    return this.radius*2;
+  },
+  perimiter:()=>2*Math.PI*this.radius
+
+}
+
+console.log(shape.diameter());//20
+console.log(shape.perimiter());//Nan
+
+//Nested destructuring
+const user1={
+  name:"rahul",
+  age:20,
+  fullName:{
+    first:"rahul",
+    last:"Singh"
+  }
+}
+const {name:username} = user1
+console.log(username)
+const {fullName:{first}} = user1;
+console.log(first)
+
+
+//Output
+
+let person = {
+  name:'singh'
+}
+const members = [person];
+person = null;
+console.log(members)
+
+//We are not changing the property of person obj we are changing the variable person but if we did perosn.name = null then it will affrct members[0]
+
+
+//Whats the output
+function changeAgeAndReference(person){
+  person.age = 25
+  person = {                   //we are reassinng the object 
+    name:"rahul",
+    age:30
+  }
+  return person
+}
+const person2 = {
+  name:"alex",
+  age:38
+}
+
+const perosnObj = changeAgeAndReference(person2);
+console.log(perosnObj);
+console.log(person2)
+
+
+
+
+//This
+let user2  = {
+name:"rahul",
+age:24,
+// getDetails(){
+//   console.log(this.name)
+// }
+getDetails:()=>{
+  console.log(this.name) //here it will point to its parent function hence the window object
+}
+}
+
+user2.getDetails();
+
+let user3  = {
+  name:"rahul",
+  age:24,
+ childObj:{
+  newName:"Singh",
+  getDetails(){
+    console.log(this.newName + this.name) //This will always point to its parent object here its childobj
+  }
+ },
+ getDetails(){
+  const nestedArr = ()=>console.log(this.name); //here the nestedArr is pointing it to its normal function getdetails which refers to user3 but if you change it to arrow getDetails it will point to window
+  nestedArr()
+ }
+  }
+
+user3.childObj.getDetails()
+user3.getDetails()
+
+
+//What is the output
+
+const obj = {
+  name:"rahul",
+  getName(){
+    const name = "singh"
+   return this.name
+  }
+}
+
+console.log(obj.getName())
+
+//What is the result of accesing its ref and why?
+
+function makeUser(){
+  return{
+    name:"john",
+    ref:this
+  }
+}
+
+let userRes = makeUser();        //since we are calling and in  return we are getting {} this obj point to its parent obj i.e window
+console.log(userRes)             // this will {name:'john',ref:windowObj}
+console.log(userRes.ref.name);
+
+//Above example
+let newObj = {
+  name:'rahul',
+  ref:this
+}
+
+console.log(newObj.ref.name)
+
+function makeUser1(){
+  return{
+    name:"john",
+    ref(){
+      return this
+    }
+  }
+}
+// let userR = makeUser1(); 
+// console.log(userR.ref().name);
+
+
+//What is the output
+
+const user4 = {
+  name:"Rohit",
+  logMessage(){
+    console.log(this.name)
+  }
+}
+
+// setTimeout(user4.logMessage,1000) --->undefined here its using as callback rather than method hence has no reference to parent but window
+// setTimeout(function(){
+//   user4.logMessage()
+// },1000)
+
+
+//create an object calculator
+
+// const calculator = {
+//   read(){
+//     this.a = Number(prompt('enter the number1:',0));
+//     this.b = Number(prompt('enter the number2:',0));
+//   },
+//   sum(){
+//     return this.a + this.b
+//   },
+//   mul(){
+//     return this.a * this.b
+//   }
+// }
+
+// console.log(calculator.read());
+// console.log(calculator.sum());
+// console.log(calculator.mul());
+
+//what is the output
+var length = 4;
+function callbakc(){
+  console.log("this",this.length)
+}
+
+const object = {
+  length:5,
+  method(fn){
+    fn()
+  }
+}
+object.method(callbakc);  // iT wil give 4 beacuse fn() the inner fun points to global obj;
+
+//Modification
+const object1 = {
+  length:5,
+  method(){
+    console.log(arguments)
+    // arguments[0]() // [callback] --> this then will point to parent obj which is array which is an object hence length 1
+    arguments[0]() // [callback] --> this then will point to array which is an object hence length 4
+  }
+}
+object1.method(callbakc);  // bj;
+object1.method(callbakc,2,34,5);  // bj;
+
+
+//implement calc
+//const result1 = calc.add(10).multiply(20).subtract(30).add(10);
+
+const calc = {
+  total:0,
+  add(a){
+    this.total+=a
+    return this             //here i am returning the whole object so that further method in chain has access to the obj
+  },
+  subtract(b){
+    this.total-=b
+    return this
+  },
+  multiply(c){
+    this.total*=c
+    return this
+  }
+
+}
+const result1 = calc.add(10).multiply(20).subtract(30).add(10);
+
+console.log(result1.total)
+
