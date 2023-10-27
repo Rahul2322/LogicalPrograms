@@ -361,3 +361,7 @@ function deepCopy(obj) {
  }
 
  console.log(secMin([3, 5, 8, 4, 2, 10, 9]))
+
+
+
+ 

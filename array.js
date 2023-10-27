@@ -156,30 +156,78 @@ console.log(moveZeros([1, 0, 2, 3, 0, 4, 0, 1]))
 const leftRotateArray = (arr, d) => {
     //First reverse the sub array 
 
-    if (d % 2 == 0) return arr
+    if (d % arr.length == 0) return arr
 
-    for (let i = 0; i < Math.floor(d / 2); i++) {
-        temp = arr[i];
-        arr[i] = arr[d - i - 1];
-        arr[d - i - 1] = temp
-    }
-    let n = arr.length - 1
-    //then reverse the whole array
-    for (let i = d; i < n; i++) {
-        temp = arr[i];
-        arr[i] = arr[n];
-        arr[n] = temp;
-        n--;
-    }
+//     for (let i = 0; i < Math.floor(d / 2); i++) {
+//         let temp = arr[i];
+//         arr[i] = arr[d - i - 1];
+//         arr[d - i - 1] = temp
+//     }
+//     let n = arr.length - 1
+   
+//     for (let i = d; i <= n; i++) {
+//         let temp = arr[i];
+//         arr[i] = arr[n];
+//         arr[n] = temp;
+//         n--;
+//     }
+//    // then reverse the whole array
+//     for (let i = 0; i < Math.floor(arr.length / 2); i++) {
+//        let temp = arr[i];
+//         arr[i] = arr[arr.length - i - 1];
+//         arr[arr.length - i - 1] = temp;
+//     }
 
-    for (let i = 0; i < Math.floor(arr.length / 2); i++) {
-        temp = arr[i];
-        arr[i] = arr[arr.length - i - 1];
-        arr[arr.length - i - 1] = temp;
+function reverse(arr,start,end){
+    while(start<=end){
+        let temp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = temp;
+        start++;
+        end--;
     }
+}
+
+// Reverse first d elements
+reverse(arr,0,d-1);
+// Reverse last n-d elements
+reverse(arr,d,n-1)
+//reverse whole array
+reverse(arr,0,n-1)
     return arr;
 }
-console.log(leftRotateArray([1, 2, 3, 4, 5, 6, 7], 2))
+console.log('ledtRotatteArray',leftRotateArray([1, 2, 3, 4, 5, 6, 7], 2))
+
+//Given an array of N integers and an integer D, right rotate the array by D place.
+const rightRotateArray = (arr,d)=>{
+    let n = arr.length;
+    if (d % n == 0) return arr; 
+    function reverse(arr,start,end){
+        while(start<=end){
+            let temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+            start++;
+            end--;
+        }
+    }
+
+    //reverse  first n-d elements;
+
+    reverse(arr,0,n-d-1);
+
+    //reverse last d elements;
+
+    reverse(arr,n-d,n-1)
+
+    //reverse whole array
+
+    reverse(arr,0,n-1)
+
+  return arr;
+
+}
+
 
 
 // Given an integer array sorted in non-decreasing order, remove the duplicates in place such that each unique element appears only once. The relative order of the elements should be kept the same
@@ -216,11 +264,31 @@ const removeDuplicates = (arr) => {
 
 }
 
-console.log(removeDuplicates([1,3,6,5,4,3,4,2]))
+console.log(removeDuplicates([1,1,2,2,2,3,3]))
 
+/*
+Problem Statement: Given two sorted arrays, arr1, and arr2 of size n and m. Find the union of two sorted arrays
+*/
 
-
-
+function union (arr1,arr2){
+    let set = new Set();
+    const res= []
+    for(let key of arr1){
+        set.add(key)
+    }
+    
+    for(let key of arr2){
+        set.add(key)
+    }
+    
+    for(let key of set){
+        res.push(key)
+    }
+   return res;
+    
+   }
+   
+   console.log(union([1,2,3,4,5,5,5],[1,2,3,4,6,7]))
 
 
 function missingNumber(a, N) {
@@ -1006,16 +1074,16 @@ let user = {
     }
 }
 
-class Animal {
-    constructor = (name, numOfLegs) => {
-      this.name = name
-      this.numOfLegs = numOfLegs
-    }
+// class Animal {
+//     constructor = (name, numOfLegs) => {
+//       this.name = name
+//       this.numOfLegs = numOfLegs
+//     }
     
-    sayName = () => {
-    console.log(`My name is ${this.name}`)
-  }
-  }
+//     sayName = () => {
+//     console.log(`My name is ${this.name}`)
+//   }
+//   }
   
   // Uncaught SyntaxError: Classes may not have a field named 'constructor'
 
@@ -1026,13 +1094,13 @@ class Animal {
 //6.5 Arrow functions cannot be accessed before initialization
 //Hoisting is a concept where a variable or function is lifted to the top of its global or local scope before the whole code is executed. This makes it possible for such a variable/function to be accessed before initialization. Here's a function example:
 
-printName()
+// printName()
 
-console.log("hello")
+// console.log("hello")
 
-function printName() {
-  console.log("i am dillion")
-}
+// function printName() {
+//   console.log("i am dillion")
+// }
 
 // i am dillion
 // hello
@@ -1048,13 +1116,13 @@ function printName() {
 
 // Here's an example with an arrow function:
 
-printName()
+// printName()
 
-console.log("hello")
+// console.log("hello")
 
-const printName = () => {
-  console.log("i am dillion")
-}
+// const printName = () => {
+//   console.log("i am dillion")
+// }
 
 // ReferenceError: Cannot access 'printName' before initialization
 // Running this code, you get an error: ReferenceError: Cannot access 'printName' before initialization.
@@ -1063,13 +1131,13 @@ const printName = () => {
 
 // Let's say we use var for our arrow function:
 
-printName()
+// printName()
 
-console.log("hello")
+// console.log("hello")
 
-var printName = () => {
-  console.log("i am dillion")
-}
+// var printName = () => {
+//   console.log("i am dillion")
+// }
 
 // TypeError: printName is not a function
 //Here, we have declared the printName variable with var. The error we get now is TypeError: printName is not a function. The reason for this is that variables declared with var are hoisted and accessible, but they have a default value of undefined. So attempting to access printName before the line it was initialized with the function expression is interpreted as undefined(), and as you know, "undefined is not a function".

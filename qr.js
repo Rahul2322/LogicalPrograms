@@ -152,3 +152,32 @@ function prime(n){
 
 console.log(prime(36))
 console.log(prime(15))
+
+const leftRotateArray = (arr, d) => {
+    //First reverse the sub array 
+
+     if (d % arr.length == 0) return arr
+
+    for (let i = 0; i < Math.floor(d / 2); i++) {
+        let temp = arr[i];
+        arr[i] = arr[d - i - 1];
+        arr[d - i - 1] = temp
+    }
+    console.log(arr)
+    let n = arr.length - 1
+    //then reverse the whole array
+    for (let i = d; i <= n; i++) {
+        let temp = arr[i];
+        arr[i] = arr[n];
+        arr[n] = temp;
+        n--;
+    }
+
+    for (let i = 0; i < Math.floor(arr.length / 2); i++) {
+        let temp = arr[i];
+        arr[i] = arr[arr.length - i - 1];
+        arr[arr.length - i - 1] = temp;
+    }
+    return arr;
+}
+console.log(leftRotateArray([1, 2, 3, 4, 5, 6, 7], 2))

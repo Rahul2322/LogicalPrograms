@@ -120,3 +120,9 @@ console.log('min of max',partition(array1,n,3))
 // }
 
 // console.log(power(2,5))
+
+try {
+  throw new Error("Something went wrong")
+} catch (error) {
+  console.log(error.message.length)
+}

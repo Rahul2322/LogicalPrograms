@@ -422,3 +422,99 @@ const spiralTraversal = (root)=>{
 }
 
 console.log(spiralTraversal(a))
+
+
+//Boundary Traversal  {anticlockwise movement}
+
+const addLeftBoundary = (root,result)=>{
+let curr = root.left;
+while(curr){
+  if(!isLeaf(curr)) result.push(curr.val);
+  if(curr.left) curr = curr.left
+  else curr = curr.right
+}
+}
+
+const addLeaves = (root,result)=>{
+  if(isLeaf(root)){
+    result.push(root.val);
+    return;
+  }
+  if(root.left) addLeaves(root.left,result)
+  if(root.right) addLeaves(root.right,result)
+}
+const addRightBoundary = (root,result)=>{
+  let curr = root.right;
+  let temp = [];
+  while(curr){
+    if(!isLeaf(curr)) temp.push(curr.val);
+    if(curr.right) curr = curr.right;
+    else curr = curr.left
+  }
+  for(let i = temp.length - 1;i>=0;i--){
+    result.push(temp[i])
+  }
+}
+
+const isLeaf = (root)=>{
+  if(!root.left && !root.right) return true
+  else return false
+
+  // return root.left && root.right
+}
+const boundaryTraversal = (root)=>{
+  const result = [];
+  if(!root) return []
+  if(!isLeaf(root)) result.push(root.val);
+  addLeftBoundary(root,result);
+  addLeaves(root,result);
+  addRightBoundary(root,result);
+  console.log('result',result)
+}
+
+boundaryTraversal(a)
+
+
+
+//Vertical Order Traversal
+
+const q = new Node(1);
+const r = new Node(2);
+const s = new Node(3);
+const t = new Node(4);
+const v = new Node(5);
+const w = new Node(6);
+const x = new Node(10);
+const y = new Node(10);
+const z = new Node(9);
+
+q.left = r;
+q.right = s;
+r.left = t;
+r.right = x;
+s.left = z;
+s.right  = y;
+t.right = v;
+v.right = w;
+
+const verticalTraversal = (root)=>{
+  const todo = [{node:root,x:0,y:0}];
+  const nodes =  new Map();
+  while(todo.length > 0){
+    let currVal = todo.shift();
+    let node = currVal.node.val;
+    let x = currVal.x, y = currVal.y; 
+     nodes.set({x,y},node);
+     if(currVal.node.left) todo.push({node:currVal.node.left,x:x - 1,y: y + 1});
+     if(currVal.node.right) todo.push({node:currVal.node.right,x:x + 1,y: y + 1});
+  }
+   let n = new Map([...nodes.entries()].sort((a,b)=> a[0]["x"] - b[0]["x"]));
+   console.log(n)
+//   for (const key of nodes) {
+//     console.log('jsdsajdjsad',key[0]["x"])
+   
+// }
+// console.log(n)
+}
+
+verticalTraversal(q)
