@@ -388,11 +388,24 @@ const intersectionArrays = (arr1, arr2) => {
 //        [1, 3] (for 2nd variant)
 
 const arraySum = (arr, target) => {
-    for (let i = 0; i < arr.length - 1; i++) {
-        for (let j = i + 1; j < arr.length; j++) {
-            if (arr[i] + arr[j] == target) {
-                return { x: i, y: j }
+    // for (let i = 0; i < arr.length - 1; i++) {
+    //     for (let j = i + 1; j < arr.length; j++) {
+    //         if (arr[i] + arr[j] == target) {
+    //             return { x: i, y: j }
+    //         }
+    //     }
+    // }
+
+    let seen = new Map();
+    for(let i=0;i<arr.length;i++){
+        complement = target - arr[i]
+        if(seen.has(complement)){
+            return {
+                x:seen.get(complement),
+                y:i
             }
+        }else{
+            seen.set(arr[i],i)
         }
     }
 }

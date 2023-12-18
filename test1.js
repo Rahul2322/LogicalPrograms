@@ -1,5 +1,5 @@
 const prime = (n)=>{
-  for(let i=2;i*2<n;i++){
+  for(let i=2;i*i<=n;i++){
     if(n%i == 0){
       return false
     }
@@ -343,16 +343,28 @@ const fibonacci = (n)=>{
 
   //WAP with 2 different logic, to find all duplicate number in an array
   const duplicateNumber = (arr)=>{
-    newArr = [];
-    for (let i = 0; i <  arr.length - 1; i++) {
-      for (let j = i + 1; j < arr.length; j++) {
-      if (arr[i] === arr[j]) {
-         newArr.push(arr[i]);
-         }
-      }
-   }
+  //   newArr = [];
+  //   for (let i = 0; i <  arr.length - 1; i++) {
+  //     for (let j = i + 1; j < arr.length; j++) {
+  //     if (arr[i] === arr[j]) {
+  //        newArr.push(arr[i]);
+  //        }
+  //     }
+  //  }
+  //return newArr
+
+  //Using set 
+  const seen = new Set();
+  const duplicate = [];
+  for(let ele of arr){
+    if(seen.has(ele)){
+      duplicate.push(ele)
+    }else{
+      seen.add(ele)
+    }
+  }
   
-    return newArr
+    return duplicate
   }
   
 const arry = [1, 2, 1, 3, 4, 3, 5];
@@ -363,6 +375,8 @@ console.log(duplicateElements);
 
 
 console.log(duplicateNumber([1, 2, 1, 3, 4, 3, 5]))
+
+
 
 
 function isPrime(n){

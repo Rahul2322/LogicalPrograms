@@ -565,7 +565,7 @@ user3.getDetails()
 const obj = {
   name:"rahul",
   getName(){
-    const name = "singh"
+  const name = "singh"
    return this.name
   }
 }
