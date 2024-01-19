@@ -689,3 +689,61 @@ const result1 = calc.add(10).multiply(20).subtract(30).add(10);
 
 console.log(result1.total)
 
+
+var x = 21;
+var girl = function () {
+    console.log(x);
+    var x = 20;
+};
+girl ();
+/*
+Neither 21, nor 20, the result is undefined
+
+It’s because JavaScript initialization is not hoisted.
+
+(Why doesn’t it show the global value of 21? The reason is that when the function is executed, it checks that there’s a local x variable present but doesn’t yet declare it, so it won’t look for global one.)
+*/
+
+(function () {
+  try {
+      throw new Error();
+  } catch (x) {
+      var x = 1, y = 2;
+      console.log(x);
+  }
+  console.log(x);
+  console.log(y);
+})();
+
+(function () {
+  var x, y; // outer and hoisted
+  try {
+      throw new Error();
+  } catch (x /* inner */) {
+      x = 1; // inner x, not the outer one
+      y = 2; // there is only one y, which is in the outer scope
+      console.log(x /* inner */);
+  }
+  console.log(x);
+  console.log(y);
+})();
+
+
+var bi = 1;
+function outer(){
+   	var bi = 2
+    function inner(){
+        bi++;
+        var bi = 3;
+        console.log(bi)
+    }
+    inner();
+}
+outer();
+
+function inner () {
+  var b; // b is undefined
+  b++; // b is NaN
+  b = 3; // b is 3
+  console.log(b); // output "3"
+}

@@ -316,10 +316,11 @@ const fibonacci = (n)=>{
   let a = 0,b=1,sum;
   let arr = [a,b]
   for(let i=2;i<n;i++){
-   sum = a+b; 
-   a =b
-   b = sum;
-   arr.push(sum)
+  //  sum = a+b; 
+  //  a =b
+  //  b = sum;
+  //  arr.push(sum)
+  arr[i] = arr[i-2] + arr[i -1]
   }
   return arr
   }

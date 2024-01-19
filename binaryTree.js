@@ -188,7 +188,7 @@ const maxPathSum = (root)=>{
 // leaf leaf    leaf
 
 
-console.log(maxPathSum(a))
+console.log(maxPathSum(a),'maxPath')
 
 
 //Take u forward
@@ -337,7 +337,7 @@ const balancedTree = (root)=>{
     if(rh === -1) return -1
 
 
-    if(lh - rh > 1) return -1;
+    if(Math.abs(lh - rh )> 1) return -1;
 
     return 1 + Math.max(lh,rh)
    }
@@ -348,6 +348,8 @@ console.log(balancedTree(a))
 
 
 //Diameter of binary tree
+//longest btwn 2 nodes 
+//path does not need to pass via root
 
 const diamOfBinaryTree = (root,maxi)=>{
   if(root == null) return 0;

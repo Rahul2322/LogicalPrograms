@@ -232,7 +232,7 @@ function generateParenthesis(n){
     let res = [];
     let curr = ''
 
-    function parenthesis(str,curr,o,c,n,res){
+    function parenthesis(curr,o,c,n,res){
         if(o == n && c == n){
             res.push(curr);
             return;
@@ -240,16 +240,16 @@ function generateParenthesis(n){
 
         //add open
         if(o < n){
-            parenthesis(str,curr+'(',o+1,c,n,res);
+            parenthesis(curr+'(',o+1,c,n,res);
         }
 
         //add close
         if(o > c){
-            parenthesis(str,curr+')',o,c+1,n,res);
+            parenthesis(curr+')',o,c+1,n,res);
         }
     }
 
-    parenthesis(str,curr,0,0,n,res)
+    parenthesis(curr,0,0,n,res)
 
     return res;
 

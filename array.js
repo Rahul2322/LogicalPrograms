@@ -442,6 +442,17 @@ function duplicate(arr) {
     }
     return false
 
+    //using set
+    let seen = new Set();
+    for(let i=0;i<arr.length;i++){
+        if(seen.has(arr[i])){
+            return arr[i]
+        }else{
+            seen.add(arr[i])
+        }
+    }
+
+
 }
 console.log(duplicate([3, 1, 3, 4, 2]));
 
@@ -836,7 +847,32 @@ console.log(subArraySum([1,2,3,4,5,6,7,8],12))
 console.log(subArraySum([1,2,3,7,5],12))
 
 
+//Write a program to find twoSum
 
+function twoSum(arr,targ){
+    //Brute force
+    // for(let i=0;i<arr.length -1 ;i++){
+    //     for(let j=i+1;i<arr.length;j++){
+    //         if(arr[i]+arr[j] === targ){
+    //             console.log(arr[i],arr[j])
+    //         }
+    //     }
+    // }
+
+    // Optimal approach
+
+    let hash = {},res=[];
+    for(let i=0;i<arr.length;i++){
+        let sumMinusElement = targ - arr[i];
+        if(hash[`${sumMinusElement}`]){
+            res.push([arr[i],sum])
+        }else{
+            hash[arr[i]] = arr[i]
+        }
+
+    }
+return res;
+}
 
 
 
