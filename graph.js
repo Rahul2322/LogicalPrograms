@@ -5,7 +5,7 @@
   b     e 
   |
   |
-  d<-----f
+  d----->f
   */
 //https://youtu.be/tWVWeAqZ0WU?si=-85iak-pY6_x06r7
 
@@ -230,3 +230,161 @@ const shortestPath = (edges,nodeA,nodeB)=>{
 }
 
 console.log(shortestPath(edges1,'w','z'))
+
+
+
+/*
+There is a bi-directional graph with n vertices, where each vertex is labeled from 0 to n - 1 (inclusive). The edges in the graph are represented as a 2D integer array edges, where each edges[i] = [ui, vi] denotes a bi-directional edge between vertex ui and vertex vi. Every vertex pair is connected by at most one edge, and no vertex has an edge to itself.
+You want to determine if there is a valid path that exists from vertex source to vertex destination.
+Given edges and the integers n, source, and destination, return true if there is a valid path from source to destination, or false otherwise.
+
+n = 3, edges = [[0,1],[1,2],[2,0]], source = 0, destination = 2
+n = 6, edges = [[0,1],[0,2],[3,5],[5,4],[4,3]], source = 0, destination = 5
+*/
+
+//Using adjacency matrix
+const findPathdfs = (n,edges,src,dest)=>{
+  const graph = Array(n).fill(null).map(()=> new Array(n).fill(false));
+  for(let edge of edges){
+    let u = edge[0] ,v = edge[1]
+    graph[u][v] = true            //bidirectional
+    graph[v][u] = true
+  }
+  const visited = Array(n).fill(false);
+    function dfs(graph,vis,src,dest,n){
+        if(src == dest) return true;
+        vis[src] = true
+        for(let i=0;i<n;i++){
+          if(graph[src][i] == true && !vis[i]){
+           if(dfs(graph,vis,i,dest,n)) return true
+          }
+        }
+        return false;
+    }
+
+    return dfs(graph,visited,src,dest,n)
+
+}
+
+// console.log(findPath(3,[[0,1],[1,2],[2,0]],0,2))
+console.log(findPathdfs(6, [[0,1],[0,2],[3,5],[5,4],[4,3]],0,5))
+
+
+
+const findPathBfs = (n,src,dest,edges)=>{
+  const graph = Array(n).fill(null).map(()=>Array(n).fill(false));
+  const visited = Array(n).fill(false);
+  const queue = [];
+  for(let edge of edges){
+    let u = edge[0],v = edge[1];
+    graph[u][v] = true;
+    graph[v][u] = true;
+  }
+  queue.push(src);
+  visited[src] = true;
+  
+  while(queue.length > 0){
+    let curr = queue.shift();
+    if(curr === dest) return true;
+    for(let i=0;i<n;i++){
+      if(graph[curr][i] == true && !visited[i]){
+        queue.push(i);
+        visited[i] = true;
+      }
+    }
+  }
+  return false;
+}
+
+console.log(findPathBfs(3,0,2,[[0,1],[1,2],[2,0]]));
+console.log(findPathBfs(6,0,5,[[0,1],[0,2],[3,5],[5,4],[4,3]]));
+
+
+//Using adjacnecy list --> with good time complexity
+
+const findDfsList = (n,edges,src,dest)=>{
+const graph = new Map()
+const visited = Array(n).fill(false);
+for(let edge of edges){
+  let u = edge[0],v = edge[1];
+ if(!graph.has(u)) graph.set(u,[])
+ if(!graph.has(v)) graph.set(v,[])
+ graph.get(u).push(v);
+ graph.get(v).push(u);
+}
+ 
+function dfs(n,graph,vis,src,dest){
+    if(src == dest) return true;
+    vis[src] = true;
+    for(let neighbour of graph.get(src)){
+      if(!vis[neighbour]){
+        if(dfs(n,graph,vis,neighbour,dest)){
+          return true;
+        }
+      }
+    }
+    return false;
+}
+
+return dfs(n,graph,visited,src,dest)
+
+
+}
+
+console.log(findDfsList(3,[[0,1],[1,2],[2,0]],0,2))
+
+
+const findPathBfsList = (n,edges,src,dest)=>{
+  const graph = new Map();
+  const vis = Array(n).fill(false);
+
+  for(let edge of edges){
+    let u = edge[0], v= edge[1];
+    if(!graph.has(u)) graph.set(u,[]);
+    if(!graph.has(v)) graph.set(v,[]);
+
+    graph.get(u).push(v);
+    graph.get(v).push(u);
+  }
+
+  let queue = [];
+  queue.push(src);
+  vis[src] = true;
+  while(queue.length > 0){
+    const curr = queue.shift();
+    if(curr == dest) return true;
+    for(let neighbour of graph.get(curr)){
+      if(!vis[neighbour]){
+        vis[neighbour] =true;
+        queue.push(neighbour)
+      }
+    }
+  }
+  return false;
+}
+
+/*
+Given 2 integers n and k ,return an array of all the integers of length n where the diff between eveery 2 consecutive
+digits is k.you may return the ans in any order
+
+NOte:the integer should not have leading zeroes .integers as 02 and 043 are not allowed
+*/
+
+const numWithConsecutiveDiff = (n,k)=>{
+  const res = [];
+  function dfs(num,n,k,res){
+      if(n == 0){
+        res.push(num);
+        return;
+      }
+      let lastDigit =  num%10;
+      if(lastDigit + k <=9) dfs(num*10+lastDigit+k,n-1,k,res);
+      if(k !=0 && lastDigit - k >=0) dfs(num*10 + lastDigit - k,n-1,k,res) 
+  }
+  for(let num=1;num<=9;num++){
+    dfs(num,n-1,k,res)
+  }
+   return res;
+}
+
+console.log(numWithConsecutiveDiff(3,7))

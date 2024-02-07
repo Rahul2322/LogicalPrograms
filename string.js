@@ -99,3 +99,26 @@ return len
       }
   };
   myObject.func();
+
+  /*
+Given a string s, sort it in decreasing order based on the frequency of the characters. The frequency of a character is the number of times it appears in the string.
+Return the sorted string. If there are multiple answers, return any of them.
+Input: s = "tree"
+Output: "eert"
+Explanation: 'e' appears twice while 'r' and 't' both appear once.
+So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid answer.
+  */
+
+  var frequencySort = function(s) {
+    let result = '',hash={};
+    for(let i=0;i<s.length;i++){
+       hash[s[i]] = (hash[s[i]] || 0) + 1
+    }
+    let sortedChars = Object.keys(hash).sort((a,b)=>hash[b] - hash[a]);
+    for(let char of sortedChars){
+      result+= char.repeat(hash[char])
+    }
+    return result;
+  };
+
+  console.log(frequencySort('2a554442f544asfasssffffasss'))
