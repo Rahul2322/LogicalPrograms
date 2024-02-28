@@ -1233,3 +1233,32 @@ console.timeEnd("6") //81.74 ms
 console.time("12")
 find(12);
 console.timeEnd("12") //76.98 ms
+
+/*
+Input: nums = [10,4,8,3]
+Output: [15,1,11,22]
+Explanation: The array leftSum is [0,10,14,22] and the array rightSum is [15,11,3,0].
+The array answer is [|0 - 15|,|10 - 11|,|14 - 3|,|22 - 0|] = [15,1,11,22].
+*/
+
+function leftRightSum(nums) {
+	const leftSum = Array(nums.length).fill(0);
+	const rightSum = Array(nums.length).fill(0);
+	const res = [];
+	for(let i=1;i<nums.length;i++){
+		leftSum[i] = leftSum[i-1] + nums[i-1]
+	}
+	for(let j=nums.length - 2;j>=0;j--){
+		rightSum[j] = rightSum[j+1] + nums[j+1]
+	}
+
+	for(let i=0;i<leftSum.length;i++){
+		res.push(Math.abs(leftSum[i] - rightSum[i]))
+	}
+
+	return res;
+}
+
+const arr = [10, 4, 8, 3];
+
+console.log(leftRightSum(arr))

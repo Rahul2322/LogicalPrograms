@@ -122,3 +122,39 @@ So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid ans
   };
 
   console.log(frequencySort('2a554442f544asfasssffffasss'))
+
+  function validParenthesis(str){
+	const res = [];
+	const arr = str.split('');
+	let ans = true;
+	for(let i=0;i<arr.length;i++){
+		if(arr[i] == '{' || arr[i]== '[' || arr[i] == '('){
+			res.push(arr[i])
+		}
+		else if( arr[i] == '}'){
+			if(res.pop() !== '{'){
+				ans = false;
+				break;
+			}
+		}
+		else if( arr[i] == ']'){
+			if(res.pop() !== '['){
+				ans = false;
+				break;
+			}
+		}
+		else if( arr[i] == ')'){
+			if(res.pop() !== '('){
+				ans = false;
+				break;
+			}
+		}
+	}
+	if(res.length !=0){
+		ans = false;
+	}
+	return ans;
+}
+
+console.log(validParenthesis('(('))
+console.log(validParenthesis('[()]{}{[()()]()}'))

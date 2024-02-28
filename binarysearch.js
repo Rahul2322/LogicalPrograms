@@ -14,12 +14,11 @@ Explanation: Index 3 is the smallest index such that arr[3] >= x.
 
 function lowerBound (arr,targ){
     let l = 0,h = arr.length -1,ans = arr.length -1
-    
     while(l <= h){
         const mid = Math.floor((l+h)/2);
         if(arr[mid] >= targ){
             ans = mid
-            h = mid -1
+            h = mid - 1
         }else {
                l = mid + 1; 
            }
