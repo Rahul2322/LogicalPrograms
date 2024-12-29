@@ -305,7 +305,6 @@ function longestKSubstr(arr, k) {
   //   r++;
   // }
 
-
   //OPtimal Solution
 
   while (r < n) {
@@ -328,6 +327,107 @@ function longestKSubstr(arr, k) {
 }
 
 console.log(longestKSubstr("aabacbebebe", 3), "longestKSub");
+
+/**
+ *
+ 	
+Number of substring containing all three characters
+
+Given a string s consisting only of characters a, b and c.
+
+Return the number of substrings containing at least one occurrence of all these characters a, b and c.
+Input: s = "abcabc"
+Output: 10
+Explanation: The substrings containing at least one occurrence of the characters a, b and c are "abc", "abca", "abcab", "abcabc", "bca", "bcab", "bcabc", "cab", "cabc" and "abc" (again). 
+ */
+function numberOfSubstrings(s) {
+  let n = s.length;
+  let count = 0;
+  //Brute Force
+  // for(let i=0;i<n;i++){
+  //   let hash = new Map();
+  //   for(let j=i;j<n;j++){
+  //     hash.set(s[j],1);
+  //     if(hash.get('a') + hash.get('b') + hash.get('c') === 3){
+  //       // count += 1; //One way
+
+  //       count += n-j; //because if i found one like bbac it means bbacb,bbacba will also be substring
+  //       break;
+  //     }
+  //   }
+  // }
+
+  //Optimal Solution
+  let lastSeen = {'a':-1,'b':-1,'c':-1}
+  for(let i=0;i<n;i++){
+    lastSeen[s[i]] = i;
+    if(lastSeen['a'] !== -1 && lastSeen['b'] !== -1 && lastSeen['c'] !== -1){
+      count = count + ( 1 + Math.min(lastSeen['a'],lastSeen['b'],lastSeen['c']))
+    }
+  }
+  return count;
+}
+
+console.log(numberOfSubstrings('bbacba'),'numberOfSubstring');
+
+
+
+/**
+ * 
+Longest Repeating Character Replacement
+
+You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times.
+
+Return the length of the longest substring containing the same letter you can get after performing the above operations.
+
+Input: s = "ABAB", k = 2
+Output: 4
+Explanation: Replace the two 'A's with two 'B's or vice versa.
+ */
+
+function characterReplacement(s, k) {
+  let n = s.length;
+  let maxLength = 0;
+
+  //Brute Force
+
+  // for(let i=0;i<n;i++){
+  //   let hash = {};
+  //   let maxFrequency=0;
+  //   for(let j=i;j<n;j++){
+  //     hash[s[j]] = (hash[s[j]] || 0) + 1;
+  //     maxFrequency = Math.max(maxFrequency,hash[s[j]]);
+  //     changes = (j-i+1) - maxFrequency;
+  //     if(changes <= k){
+  //       maxLength = Math.max(maxLength,j-i+1);
+  //     }else{
+  //       break;
+  //     }
+  //   }
+  // }
+
+
+  //Optimal Solution
+
+  let l=0, r=0 ,hash= {},maxFreq = 0;
+  while(r < n){
+    hash[s[r]] = (hash[s[r]] || 0) + 1;
+    maxFreq = Math.max(maxFreq,hash[s[r]]);
+    if((r-l+1) - maxFreq > k){
+      hash[s[l]]--;
+      l = l+1;
+    }
+    if((r-l+1) - maxFreq <= k){
+      maxLength = Math.max(maxLength,r-l+1);
+    }
+    r++;
+  }
+    return maxLength;
+};
+
+
+console.log(characterReplacement('ABAB',2),'character replacement');
+
 
 function binarySubarrayWithSum(arr, k) {
   function atMost(k) {
