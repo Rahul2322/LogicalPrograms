@@ -1,25 +1,24 @@
 //binary tree
 //-at most 2 children per node
-//- exactly one root 
+//- exactly one root
 //-exctly one path btwn root and any node
-//root node is a node who has no parent 
+//root node is a node who has no parent
 //leaf node is a node which has no children
 
-    //        a(13)       root
-    //      /   \
-    //     b(4)   c(11)
-    //    / \      \
-    //d(5)   e(6)   f(9)
+//        a(13)       root
+//      /   \
+//     b(4)   c(11)
+//    / \      \
+//d(5)   e(6)   f(9)
 //      leaf leaf    leaf
 
-class Node{
-  constructor(val){
-      this.val = val;
-      this.left = null;
-      this.right = null;
+class Node {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
   }
 }
-
 
 // const a = new Node('a');
 // const b = new Node('b');
@@ -35,7 +34,6 @@ const d = new Node(5);
 const e = new Node(6);
 const f = new Node(9);
 
-
 a.left = b;
 a.right = c;
 b.left = d;
@@ -44,55 +42,52 @@ c.right = f;
 
 // console.log(a)
 
-
 //Depth first traversal
 
-const depthFirstTraversal = (root)=>{
-//   let stack = [root];
-//   let result = [];
-// if(root == null) return result
-//  while(stack.length > 0){\
-//   let currVal = stack.pop();
-//   result.push(currVal.val);
-//   if(currVal.right !== null) stack.push(currVal.right);
-//   if(currVal.left !== null) stack.push(currVal.left);
-//  }
+const depthFirstTraversal = (root) => {
+  //   let stack = [root];
+  //   let result = [];
+  // if(root == null) return result
+  //  while(stack.length > 0){\
+  //   let currVal = stack.pop();
+  //   result.push(currVal.val);
+  //   if(currVal.right !== null) stack.push(currVal.right);
+  //   if(currVal.left !== null) stack.push(currVal.left);
+  //  }
 
-//  return result;
+  //  return result;
 
-//With Recursion
+  //With Recursion
 
-if(root == null) return []
-const left = depthFirstTraversal(root.left);
-const right = depthFirstTraversal(root.right);
-return [root.val,...left,...right]
-}
+  if (root == null) return [];
+  const left = depthFirstTraversal(root.left);
+  const right = depthFirstTraversal(root.right);
+  return [root.val, ...left, ...right];
+};
 
 const res = depthFirstTraversal(a);
-console.log(res)
-
+console.log(res);
 
 //Breadth Traversal or Level Order Traversal
 
-const breadthFirstTraversal = (root)=>{
-  let queue = [root],result = [];
-  if(root == null) return result
-  while(queue.length > 0){
+const breadthFirstTraversal = (root) => {
+  let queue = [root],
+    result = [];
+  if (root == null) return result;
+  while (queue.length > 0) {
     const currVal = queue.shift();
     result.push(currVal.val);
-    if(currVal.left !== null) queue.push(currVal.left);
-    if(currVal.right !== null) queue.push(currVal.right);
-
+    if (currVal.left !== null) queue.push(currVal.left);
+    if (currVal.right !== null) queue.push(currVal.right);
   }
-return result;
-}
+  return result;
+};
 
-console.log(breadthFirstTraversal(a))
-
+console.log(breadthFirstTraversal(a));
 
 //Tree Includes
 
-const treeIncludes = (root,target)=>{
+const treeIncludes = (root, target) => {
   // const queue = [root];
 
   // while(queue.length > 0){
@@ -106,43 +101,39 @@ const treeIncludes = (root,target)=>{
 
   // return false;
 
-
   //Recursive depthfirst
 
-  if(root === null) return false;
-  if(root.val === target) return true;
+  if (root === null) return false;
+  if (root.val === target) return true;
 
-  return treeIncludes(root.left,target) || treeIncludes(root.right,target)
-}
+  return treeIncludes(root.left, target) || treeIncludes(root.right, target);
+};
 
-console.log(treeIncludes(a,'e'))
-
+console.log(treeIncludes(a, "e"));
 
 //tree sum
 
-const treeSum = (root)=>{
+const treeSum = (root) => {
   // if(root == null) return 0;
   // return root.val + treeSum(root.left) + treeSum(root.right)
- 
-  if(root == null) return 0;
+
+  if (root == null) return 0;
   const queue = [root];
   let totalSum = 0;
-  while(queue.length > 0){
+  while (queue.length > 0) {
     const curr = queue.shift();
-    totalSum+=curr.val;
-    if(curr.left !== null) queue.push(curr.left)
-    if(curr.right !== null) queue.push(curr.right)
+    totalSum += curr.val;
+    if (curr.left !== null) queue.push(curr.left);
+    if (curr.right !== null) queue.push(curr.right);
   }
-  return totalSum
-}
+  return totalSum;
+};
 
-
-console.log(treeSum(a))
-
+console.log(treeSum(a));
 
 //Min tree value
 
-const treeMinValue = (root)=>{
+const treeMinValue = (root) => {
   // if(root == null) return Infinity;
   // let min = Infinity;  // o(n)
   // const stack = [root];
@@ -164,21 +155,24 @@ const treeMinValue = (root)=>{
   // }
   // return min;
 
-  if(root == null) return Infinity;
+  if (root == null) return Infinity;
   const leftMin = treeMinValue(root.left);
   const rightMin = treeMinValue(root.right);
-  return Math.min(root.val,leftMin,rightMin)
-}
-console.log(treeMinValue(a))
+  return Math.min(root.val, leftMin, rightMin);
+};
+console.log(treeMinValue(a));
 
 // Max root to leaf path sum  :from root to any leaf whichever side gives maximum
 
-const maxPathSum = (root)=>{
-  if(root == null) return -Infinity;
-  if(root.left == null && root.right == null) return root.val;
-  const maxChildPathSum = Math.max(maxPathSum(root.left),maxPathSum(root.right));
+const maxPathSum = (root) => {
+  if (root == null) return -Infinity;
+  if (root.left == null && root.right == null) return root.val;
+  const maxChildPathSum = Math.max(
+    maxPathSum(root.left),
+    maxPathSum(root.right)
+  );
   return root.val + maxChildPathSum;
-}
+};
 
 //        13       root
 //      /   \
@@ -187,15 +181,13 @@ const maxPathSum = (root)=>{
 //   5   6      9
 // leaf leaf    leaf
 
-
-console.log(maxPathSum(a),'maxPath')
-
+console.log(maxPathSum(a), "maxPath");
 
 //Take u forward
 
-//Pre-order Traversal -->> print-order Root-Left-Right  
+//Pre-order Traversal -->> print-order Root-Left-Right
 
-const preOrderTraversal = (node)=>{
+const preOrderTraversal = (node) => {
   // if(node == null){
   //   return;
   // }
@@ -206,54 +198,49 @@ const preOrderTraversal = (node)=>{
   //Iterative Approach
 
   const stack = [node];
-  if(node == null) return ;
+  if (node == null) return;
 
-  while(stack.length > 0){
-   let currVal = stack.pop();
-   console.log('preorder',currVal.val);
-   if(currVal.right !== null) stack.push(currVal.right);
-   if(currVal.left !== null) stack.push(currVal.left);
-   
+  while (stack.length > 0) {
+    let currVal = stack.pop();
+    console.log("preorder", currVal.val);
+    if (currVal.right !== null) stack.push(currVal.right);
+    if (currVal.left !== null) stack.push(currVal.left);
   }
+};
 
-}
+preOrderTraversal(a);
 
-preOrderTraversal(a)
-
-
-//In-order Traversal -->> print-order Left-Root-Right  
-const inOrderTraversal = (node)=>{
-  if(node == null){
+//In-order Traversal -->> print-order Left-Root-Right
+const inOrderTraversal = (node) => {
+  if (node == null) {
     return;
   }
   // inOrderTraversal(node.left);
   // console.log('inorder',node.val);
   // inOrderTraversal(node.right);
 
-
   //Iterative Approach
-  let stack = [],result=[];
-  while(true){
-      if(node !== null){
-          stack.push(node);
-          node = node.left;
-      }else{
-        if(stack.length == 0){
-          break;
-        }
-        node = stack.pop();
-        result.push(node.val);
-        node = node.right;
+  let stack = [],
+    result = [];
+  while (true) {
+    if (node !== null) {
+      stack.push(node);
+      node = node.left;
+    } else {
+      if (stack.length == 0) {
+        break;
       }
-
+      node = stack.pop();
+      result.push(node.val);
+      node = node.right;
+    }
   }
- console.log(result);
-}
-inOrderTraversal(a)
+  console.log(result);
+};
+inOrderTraversal(a);
 
-
-//post-order Traversal -->> print-order Left-Right-Root  
-const postOrderTraversal = (root)=>{
+//post-order Traversal -->> print-order Left-Right-Root
+const postOrderTraversal = (root) => {
   // if(node == null){
   //   return;
   // }
@@ -283,200 +270,193 @@ const postOrderTraversal = (root)=>{
 
   // return result;
 
-
-
   //iterative 2
 
-  let stack =[],result=[];
-  let curr=root;
-  while(curr!=null || stack.length !==0){
-    if(curr!=null){
+  let stack = [],
+    result = [];
+  let curr = root;
+  while (curr != null || stack.length !== 0) {
+    if (curr != null) {
       stack.push(curr);
-      curr = curr.left
-    }else{
+      curr = curr.left;
+    } else {
       let temp = stack[stack.length - 1];
-      if(temp.right == null){
+      if (temp.right == null) {
         stack.pop();
-        result.push(temp.val)
-        while(stack.length !==0 && stack[stack.length - 1].right.val == temp.val){
+        result.push(temp.val);
+        while (
+          stack.length !== 0 &&
+          stack[stack.length - 1].right.val == temp.val
+        ) {
           temp = stack.pop();
-          result.push(temp.val)
+          result.push(temp.val);
         }
-      }else{
+      } else {
         curr = temp.right;
       }
     }
   }
-  console.log(result)
-}
-postOrderTraversal(a)
+  console.log(result);
+};
+postOrderTraversal(a);
 
+//Maximum depth
 
-//Maximum depth 
-
-const maxDepth = (root)=>{
-  if(root == null) return 0;
-  let left =  maxDepth(root.left);
+const maxDepth = (root) => {
+  if (root == null) return 0;
+  let left = maxDepth(root.left);
   let right = maxDepth(root.right);
 
-  return 1 + Math.max(left,right)
-}
+  return 1 + Math.max(left, right);
+};
 
-console.log(maxDepth(a))
-
+console.log(maxDepth(a));
 
 //Balanced binary tree  i.e for every node ,height(left) - heiht(right) <=1
 
-const balancedTree = (root)=>{
-    return dfsHeight(root) != -1;
-   function dfsHeight(root){
-    if(root == null) return 0;
+const balancedTree = (root) => {
+  return dfsHeight(root) != -1;
+  function dfsHeight(root) {
+    if (root == null) return 0;
     let lh = dfsHeight(root.left);
-    if(lh === -1) return -1
+    if (lh === -1) return -1;
     let rh = dfsHeight(root.right);
-    if(rh === -1) return -1
+    if (rh === -1) return -1;
 
+    if (Math.abs(lh - rh) > 1) return -1;
 
-    if(Math.abs(lh - rh )> 1) return -1;
+    return 1 + Math.max(lh, rh);
+  }
+};
 
-    return 1 + Math.max(lh,rh)
-   }
-
-}
-
-console.log(balancedTree(a))
-
+console.log(balancedTree(a));
 
 //Diameter of binary tree
-//longest btwn 2 nodes 
+//longest btwn 2 nodes
 //path does not need to pass via root
 
-const diamOfBinaryTree = (root,maxi)=>{
-  if(root == null) return 0;
+const diamOfBinaryTree = (root, maxi) => {
+  if (root == null) return 0;
 
-  let lh = diamOfBinaryTree(root.left,maxi);
-  let rh = diamOfBinaryTree(root.right,maxi);
+  let lh = diamOfBinaryTree(root.left, maxi);
+  let rh = diamOfBinaryTree(root.right, maxi);
 
-  maxi[0] = Math.max(maxi[0],lh+rh);
-  return 1 + Math.max(lh,rh);
+  maxi[0] = Math.max(maxi[0], lh + rh);
+  return 1 + Math.max(lh, rh);
+};
+
+function main(root) {
+  let max = [0];
+  diamOfBinaryTree(root, max);
+  return max;
 }
 
-function main(root){
-   let max = [0];
-   diamOfBinaryTree(root,max);
-   return max;
-}
-
-console.log(main(a))
-
-
+console.log(main(a));
 
 //Maximum Path Sum in binary tree :Different question than above maxPathSum
 
-const maxPathSum1 = (root)=>{
+const maxPathSum1 = (root) => {
   let maxi = [0];
-  maxPathDown(root,maxi);
+  maxPathDown(root, maxi);
   return maxi;
 
-  function maxPathDown(root,maxi){
-     if(root == null ) return 0;
-     let left =  Math.max(0,maxPathDown(root.left,maxi));
-     let right = Math.max(0,maxPathDown(root.right,maxi));
-     maxi[0]  = Math.max(maxi[0],left+right+root.val);
-     return root.val + Math.max(left,right)
-   
+  function maxPathDown(root, maxi) {
+    if (root == null) return 0;
+    let left = Math.max(0, maxPathDown(root.left, maxi));
+    let right = Math.max(0, maxPathDown(root.right, maxi));
+    maxi[0] = Math.max(maxi[0], left + right + root.val);
+    return root.val + Math.max(left, right);
   }
-  
-}
- 
-console.log(maxPathSum1(a))
+};
 
-
+console.log(maxPathSum1(a));
 
 //Check if two trees are identical
 
-const isSameTree = (p,q)=>{
-  if(p==null || q==null) return p === q
-  return p.val===q.val && isSameTree(p.left,q.left) && isSameTree(p.right,q.right)
-}
-console.log(isSameTree(a,a))
+const isSameTree = (p, q) => {
+  if (p == null || q == null) return p === q;
+  return (
+    p.val === q.val &&
+    isSameTree(p.left, q.left) &&
+    isSameTree(p.right, q.right)
+  );
+};
+console.log(isSameTree(a, a));
 
-//Zig-Zag or Spiral Traversal 
+//Zig-Zag or Spiral Traversal
 
-const spiralTraversal = (root)=>{
-    if(root == null) return [];
-    const queue = [root];
-    const result = [];
-    let flag = true;
-    while(queue.length > 0){
-      let queLen = queue.length , currval = [];
-     for(let i = 0 ;i < queLen ; i++){
+const spiralTraversal = (root) => {
+  if (root == null) return [];
+  const queue = [root];
+  const result = [];
+  let flag = true;
+  while (queue.length > 0) {
+    let queLen = queue.length,
+      currval = [];
+    for (let i = 0; i < queLen; i++) {
       node = queue.shift();
-      flag ? currval.push(node.val) :  currval.unshift(node.val);
-      if(node.left) queue.push(node.left);
-      if(node.right) queue.push(node.right)
-     }
-
-     result.push(...currval)
-     flag = !flag
+      flag ? currval.push(node.val) : currval.unshift(node.val);
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
     }
-     return result;
-}
 
-console.log(spiralTraversal(a))
+    result.push(...currval);
+    flag = !flag;
+  }
+  return result;
+};
 
+console.log(spiralTraversal(a));
 
 //Boundary Traversal  {anticlockwise movement}
 
-const addLeftBoundary = (root,result)=>{
-let curr = root.left;
-while(curr){
-  if(!isLeaf(curr)) result.push(curr.val);
-  if(curr.left) curr = curr.left
-  else curr = curr.right
-}
-}
+const addLeftBoundary = (root, result) => {
+  let curr = root.left;
+  while (curr) {
+    if (!isLeaf(curr)) result.push(curr.val);
+    if (curr.left) curr = curr.left;
+    else curr = curr.right;
+  }
+};
 
-const addLeaves = (root,result)=>{
-  if(isLeaf(root)){
+const addLeaves = (root, result) => {
+  if (isLeaf(root)) {
     result.push(root.val);
     return;
   }
-  if(root.left) addLeaves(root.left,result)
-  if(root.right) addLeaves(root.right,result)
-}
-const addRightBoundary = (root,result)=>{
+  if (root.left) addLeaves(root.left, result);
+  if (root.right) addLeaves(root.right, result);
+};
+const addRightBoundary = (root, result) => {
   let curr = root.right;
   let temp = [];
-  while(curr){
-    if(!isLeaf(curr)) temp.push(curr.val);
-    if(curr.right) curr = curr.right;
-    else curr = curr.left
+  while (curr) {
+    if (!isLeaf(curr)) temp.push(curr.val);
+    if (curr.right) curr = curr.right;
+    else curr = curr.left;
   }
-  for(let i = temp.length - 1;i>=0;i--){
-    result.push(temp[i])
+  for (let i = temp.length - 1; i >= 0; i--) {
+    result.push(temp[i]);
   }
-}
+};
 
-const isLeaf = (root)=>{
-  if(!root.left && !root.right) return true
-  else return false
+const isLeaf = (root) => {
+  if (!root.left && !root.right) return true;
+  else return false;
 
   // return root.left && root.right
-}
-const boundaryTraversal = (root)=>{
+};
+const boundaryTraversal = (root) => {
   const result = [];
-  if(!root) return []
-  if(!isLeaf(root)) result.push(root.val);
-  addLeftBoundary(root,result);
-  addLeaves(root,result);
-  addRightBoundary(root,result);
-  console.log('result',result)
-}
+  if (!root) return [];
+  if (!isLeaf(root)) result.push(root.val);
+  addLeftBoundary(root, result);
+  addLeaves(root, result);
+  addRightBoundary(root, result);
+  console.log("result", result);
+};
 
-boundaryTraversal(a)
-
-
+boundaryTraversal(a);
 
 //Vertical Order Traversal
 
@@ -495,28 +475,31 @@ q.right = s;
 r.left = t;
 r.right = x;
 s.left = z;
-s.right  = y;
+s.right = y;
 t.right = v;
 v.right = w;
 
-const verticalTraversal = (root)=>{
-  const todo = [{node:root,x:0,y:0}];
-  const nodes =  new Map();
-  while(todo.length > 0){
+const verticalTraversal = (root) => {
+  const todo = [{ node: root, x: 0, y: 0 }];
+  const nodes = new Map();
+  while (todo.length > 0) {
     let currVal = todo.shift();
     let node = currVal.node.val;
-    let x = currVal.x, y = currVal.y; 
-     nodes.set({x,y},node);
-     if(currVal.node.left) todo.push({node:currVal.node.left,x:x - 1,y: y + 1});
-     if(currVal.node.right) todo.push({node:currVal.node.right,x:x + 1,y: y + 1});
+    let x = currVal.x,
+      y = currVal.y;
+    nodes.set({ x, y }, node);
+    if (currVal.node.left)
+      todo.push({ node: currVal.node.left, x: x - 1, y: y + 1 });
+    if (currVal.node.right)
+      todo.push({ node: currVal.node.right, x: x + 1, y: y + 1 });
   }
-   let n = new Map([...nodes.entries()].sort((a,b)=> a[0]["x"] - b[0]["x"]));
-   console.log(n)
-//   for (const key of nodes) {
-//     console.log('jsdsajdjsad',key[0]["x"])
-   
-// }
-// console.log(n)
-}
+  let n = new Map([...nodes.entries()].sort((a, b) => a[0]["x"] - b[0]["x"]));
+  console.log(n);
+  //   for (const key of nodes) {
+  //     console.log('jsdsajdjsad',key[0]["x"])
 
-verticalTraversal(q)
+  // }
+  // console.log(n)
+};
+
+verticalTraversal(q);

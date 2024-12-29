@@ -163,7 +163,7 @@ const leftRotateArray = (arr, d) => {
 //         arr[i] = arr[d - i - 1];
 //         arr[d - i - 1] = temp
 //     }
-//     let n = arr.length - 1
+     let n = arr.length - 1
    
 //     for (let i = d; i <= n; i++) {
 //         let temp = arr[i];
@@ -1262,3 +1262,161 @@ function leftRightSum(nums) {
 const arr = [10, 4, 8, 3];
 
 console.log(leftRightSum(arr))
+
+function countInversion(arr){
+  let n = arr.length;
+   return merge(arr,0,n-1)
+}
+
+
+function merge(arr,low,high){
+    let count = 0;
+    if(low >= high){
+        return count;
+    }
+    let mid = Math.floor((low+high)/2);
+   
+    count+=merge(arr,low,mid);
+    count+=merge(arr,mid+1,high);
+    count+=mergeSort(arr,low,mid,high);
+    return count
+  }  
+
+
+  function mergeSort(arr,low,mid,high){
+    let temp = [];
+    let left = low;
+    let right = mid+1;
+    let count = 0;
+    while(left <= mid && right <= high){
+        if(arr[left] <= arr[right]){
+           
+            temp.push(arr[left]);
+            left++;
+        }else{
+            count += mid - left + 1;
+            temp.push(arr[right]);
+            right++;
+        }
+    }
+    while(left <= mid){
+        temp.push(arr[left]);
+        left++;
+    }
+
+    while(right <= high){
+        temp.push(arr[right]);
+        right++;
+    }
+
+    for(let i=low ; i<=high;i++){
+        arr[i] = temp[i-low]
+    }
+    return count;
+  }
+
+
+console.log("jjjjj",countInversion([2, 4, 1, 3, 5]))
+
+
+
+function countPairs(arr,low,mid,high){
+  let count = 0;
+  let right = mid + 1;
+  for(let i=low;i<=mid;i++){
+    while(right<=high && arr[i] > 2*arr[right]) right++;
+    count = count + right - (mid + 1)
+  }
+  return count;
+}
+
+
+function merge1(arr,low,high){
+    let count = 0;
+    if(low >= high){
+        return count;
+    }
+    let mid = Math.floor((low+high)/2);
+   
+    count+=merge1(arr,low,mid);
+    count+=merge1(arr,mid+1,high);
+    count+=countPairs(arr,low,mid,high)
+    mergeSort1(arr,low,mid,high);
+    return count
+  } 
+
+
+  function mergeSort1(arr,low,mid,high){
+    let temp = [];
+    let left = low;
+    let right = mid+1;
+    while(left <= mid && right <= high){
+        if(arr[left] <= arr[right]){
+           
+            temp.push(arr[left]);
+            left++;
+        }else{
+            temp.push(arr[right]);
+            right++;
+        }
+    }
+    while(left <= mid){
+        temp.push(arr[left]);
+        left++;
+    }
+
+    while(right <= high){
+        temp.push(arr[right]);
+        right++;
+    }
+
+    for(let i=low ; i<=high;i++){
+        arr[i] = temp[i-low]
+    }
+  }
+
+function reversePairs(arr){
+      
+     return merge1(arr,0,arr.length-1)
+}
+
+console.log(reversePairs([40,25,19,12,9,6,2]));
+
+
+
+
+function maxSubProductArray(arr){
+    // let maxProductSum = Number.MIN_SAFE_INTEGER;
+    // for(let i=0;i<arr.length;i++){
+    //     let sum = 1;
+    //     for(let j=i;j<arr.length;j++){
+    //         sum = sum*arr[j];
+    //         maxProductSum = Math.max(sum,maxProductSum)
+    //     }
+    // }
+    // return maxProductSum;
+
+
+    let maxi = Number.MIN_SAFE_INTEGER;
+    let n = arr.length;
+    let prefix= 1;
+    let suffix = 1;
+    for(let i=0;i<n;i++){
+        if(prefix == 0) prefix = 1;
+        if(suffix == 0 ) suffix = 1;
+        prefix = prefix*arr[i];
+        suffix = suffix*arr[n-i-1];
+        maxi = Math.max(maxi,Math.max(prefix,suffix))
+    }
+    return maxi;
+
+
+}
+
+console.log(maxSubProductArray([6, -3, -10, 0, 2]));
+console.log(maxSubProductArray([2,3,-2,4]));
+console.log(maxSubProductArray([-1,-1]));
+
+var getCarName = ()=>{
+    return this.name
+}

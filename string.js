@@ -158,3 +158,33 @@ So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid ans
 
 console.log(validParenthesis('(('))
 console.log(validParenthesis('[()]{}{[()()]()}'))
+
+
+function letterCount(str){
+   let words = str.replace(/[^A-Za-z\s]/g,'').split(' ');
+   console.log(words);
+
+   let finalWord = '';
+   let maxCount = 0;
+   for(let word of words){
+      let letterCount = {};
+      for(let letter of word){
+         letterCount[letter] = (letterCount[letter] || 0) + 1;
+      }
+      
+     for(let letter in letterCount){
+      let repeatCount = letterCount[letter];
+      if(repeatCount > maxCount){
+         maxCount = repeatCount;
+         repeatCount = 0;
+         finalWord =  word ;
+      }
+     }
+
+   }
+
+   return finalWord ? finalWord : -1;
+}
+
+console.log(letterCount("Hello, this is awesome"));
+console.log(letterCount("hello banana apple tree"));
