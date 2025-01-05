@@ -147,7 +147,7 @@ function longestOnes(nums, k) {
     let n = nums.length,
       max = 0;
     //Brute force
-  
+
     for(let i=0;i<n;i++){
       let zeroCount = 0;
       for(let j=i;j<n;j++){
